@@ -23,7 +23,7 @@ public class DataSourceController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	//private static final Logger logger = Logger.getLogger(DataSourceController.class);
+	//private static final Logger log = Logger.getLogger(DataSourceController.class);
 
 	/**
 	 * 跳转到连接池监控页面

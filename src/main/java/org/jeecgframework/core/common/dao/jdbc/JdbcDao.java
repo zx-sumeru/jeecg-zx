@@ -1,5 +1,7 @@
 package org.jeecgframework.core.common.dao.jdbc;
 
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.ResourceUtil;
@@ -8,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -19,7 +22,8 @@ import java.util.Map;
  * @author  张代浩
  *
  */
-@Repository("jdbcDao")
+//@Repository("jdbcDao")
+@Slf4j
 public class JdbcDao extends SimpleJdbcTemplate{
 	
 	/**
@@ -36,12 +40,25 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	public static final String POSTGRE_SQL = "select * from ( {0}) sel_tab00 limit {2} offset {1}";//postgresql
 	public static final String ORACLE_SQL = "select * from (select row_.*,rownum rownum_ from ({0}) row_ where rownum <= {1}) where rownum_>{2}"; //oracle
 	public static final String SQLSERVER_SQL = "select * from ( select row_number() over(order by tempColumn) tempRowNumber, * from (select top {1} tempColumn = 0, {0}) t ) tt where tempRowNumber > {2}"; //sqlserver
-	
-	
-	@Autowired
+
+
+    public JdbcDao() {
+        super();
+    }
+
+    //@Autowired
 	public JdbcDao(DataSource dataSource) {
-		super(dataSource);
+        super(dataSource);
+        //System.out.println(dataSource);
+        //String string = JSONObject.toJSONString(dataSource);
+        log.error("注入DataSource ， {}, {}", dataSource.toString(),dataSource.getClass().getSimpleName());
 	}
+
+	//@Resource(name = "dataSource")
+    public void insertDataSource(DataSource dataSource) {
+        log.error("注入DataSource ， {}, {}", dataSource.toString(),dataSource.getClass().getSimpleName());
+        super.insertDataSource(dataSource);
+    }
 	
 	/**
 	 * 根据sql语句，返回对象集合

@@ -207,7 +207,7 @@ public class CgFormBuildController extends BaseController {
 //				        data.put(ok, ov);
 //				    }
 //		        }else{
-//		        	logger.info("online表单【"+tablename+"】【"+id+"】不存在");
+//		        	log.info("online表单【"+tablename+"】【"+id+"】不存在");
 //		        	id = null;
 //		        	dataForm = new HashMap<String, Object>();
 //		        }

@@ -56,16 +56,20 @@ import java.lang.InstantiationException;
 @Slf4j
 public abstract class GenericBaseCommonDao<T, PK extends Serializable>
 		implements IGenericBaseCommonDao {
-	/**
-	 * 初始化Log4j的一个实例
-	 */
+	///**
+	// * 初始化Log4j的一个实例
+	// */
 	//private static final Logger log = Logger.getLogger(GenericBaseCommonDao.class);
 	/**
 	 * 注入一个sessionFactory属性,并注入到父类(HibernateDaoSupport)
 	 * **/
-	@Autowired
-	@Qualifier("sessionFactory")
+	//@Autowired
+	//@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
 	public Session getSession() {
 		// 事务必须是开启的(Required)，否则获取不到

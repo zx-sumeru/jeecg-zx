@@ -71,7 +71,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/departAuthGroupController")
 public class DepartAuthGroupController extends BaseController {
 	
-	//private static final Logger logger = Logger.getLogger(DepartAuthGroupController.class);
+	//private static final Logger log = Logger.getLogger(DepartAuthGroupController.class);
 	
 	@Autowired
 	private SystemService systemService;

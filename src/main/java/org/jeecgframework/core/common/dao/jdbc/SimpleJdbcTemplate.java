@@ -1,7 +1,9 @@
 package org.jeecgframework.core.common.dao.jdbc;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -19,19 +21,32 @@ import java.util.Map;
  *
  */
 @SuppressWarnings("unchecked")
+@Slf4j
 public class SimpleJdbcTemplate extends JdbcTemplate {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	//protected final Log log = LogFactory.getLog(getClass());
 
 	protected JdbcTemplate jdbcTemplate;
 	protected NamedParameterJdbcTemplate namedJdbcTemplate;
 	
 	protected SimpleJdbcInsert simpleJdbcInsert;
-	public SimpleJdbcTemplate(DataSource dataSource){
+
+    public SimpleJdbcTemplate() {
+    }
+
+    public SimpleJdbcTemplate(DataSource dataSource){
+        log.error("注入DataSource ， {}, {}", dataSource.toString(),dataSource.getClass().getSimpleName());
 		jdbcTemplate=new JdbcTemplate(dataSource);
 		namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 		simpleJdbcInsert=new SimpleJdbcInsert(dataSource);
 	}
+
+	protected void insertDataSource(DataSource dataSource) {
+        log.error("注入DataSource ， {}, {}", dataSource.toString(),dataSource.getClass().getSimpleName());
+        jdbcTemplate=new JdbcTemplate(dataSource);
+        namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        simpleJdbcInsert=new SimpleJdbcInsert(dataSource);
+    }
 
 
 	/**
