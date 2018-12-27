@@ -8,7 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -47,14 +48,15 @@ import org.springframework.web.servlet.ModelAndView;
  * @version V1.0   
  *
  */
-//@Scope("prototype") 
+//@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/jformGraphreportHeadController")
 public class JformGraphreportHeadController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(JformGraphreportHeadController.class);
+	//private static final Logger log = Logger.getLogger(JformGraphreportHeadController.class);
 
 	@Autowired
 	private JformGraphreportHeadServiceI jformGraphreportHeadService;
@@ -110,7 +112,7 @@ public class JformGraphreportHeadController extends BaseController {
 		try{
 			jformGraphreportHeadService.delMain(jformGraphreportHead);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online图表删除]["+jformGraphreportHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online图表删除]["+jformGraphreportHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "图表配置删除失败";
@@ -137,7 +139,7 @@ public class JformGraphreportHeadController extends BaseController {
 				);
 				jformGraphreportHeadService.delMain(jformGraphreportHead);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-				logger.info("["+IpUtil.getIpAddr(request)+"][online图表批量删除]["+jformGraphreportHead.getCode()+"]"+message);
+				log.info("["+IpUtil.getIpAddr(request)+"][online图表批量删除]["+jformGraphreportHead.getCode()+"]"+message);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -163,7 +165,7 @@ public class JformGraphreportHeadController extends BaseController {
 		try{
 			jformGraphreportHeadService.addMain(jformGraphreportHead, jformGraphreportItemList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online图表录入]["+jformGraphreportHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online图表录入]["+jformGraphreportHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "图表配置添加失败";
@@ -187,7 +189,7 @@ public class JformGraphreportHeadController extends BaseController {
 		try{
 			jformGraphreportHeadService.updateMain(jformGraphreportHead, jformGraphreportItemList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online图表更新]["+jformGraphreportHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online图表更新]["+jformGraphreportHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "更新图表配置失败";
@@ -244,7 +246,7 @@ public class JformGraphreportHeadController extends BaseController {
 	    	List<JformGraphreportItemEntity> jformGraphreportItemEntityList = systemService.findHql(hql0,id0);
 			req.setAttribute("jformGraphreportItemList", jformGraphreportItemEntityList);
 		}catch(Exception e){
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/graphreport/jformGraphreportItemList");
 	}
@@ -303,7 +305,7 @@ public class JformGraphreportHeadController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();

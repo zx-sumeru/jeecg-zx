@@ -1,7 +1,8 @@
 package org.jeecgframework.core.timer;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.util.HttpRequest;
 import org.jeecgframework.core.util.IpUtil;
@@ -23,10 +24,11 @@ import java.util.List;
  * @date 2013-9-20
  * @version 1.0
  */
+@Slf4j
 @Service(value="dynamicTask")
 public class DynamicTask {
 	
-	private static Logger logger = Logger.getLogger(DynamicTask.class);
+	//private static Logger log = Logger.getLogger(DynamicTask.class);
 
 	@Autowired(required=false)
 	private Scheduler schedulerFactory;
@@ -58,7 +60,7 @@ public class DynamicTask {
 
 			return true;
 		} catch (SchedulerException e) {
-			logger.error("startTask SchedulerException"+" cron_" + task.getId()+ e.getMessage());	
+			log.error("startTask SchedulerException"+" cron_" + task.getId()+ e.getMessage());
 		}
 		return false;
 	}
@@ -86,7 +88,7 @@ public class DynamicTask {
 //			schedulerFactory.unscheduleJob("cron_" + task.getId());
 			return true;
 		}catch (SchedulerException e) {
-			logger.error("endTask SchedulerException" + " cron_" + task.getId() + e.getMessage());
+			log.error("endTask SchedulerException" + " cron_" + task.getId() + e.getMessage());
 		}
 		return false;
 	}
@@ -108,7 +110,7 @@ public class DynamicTask {
 
 			timeTaskService.updateEntitie(task);
 			systemService.addLog((start?"开启任务":"停止任务")+task.getTaskId(), Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-			logger.info((start?"开启任务":"停止任务")+"-------TaskId:"+task.getTaskId()+"-------Describe:"+task.getTaskDescribe()+"-----ClassName:"+task.getClassName() );
+			log.info((start?"开启任务":"停止任务")+"-------TaskId:"+task.getTaskId()+"-------Describe:"+task.getTaskDescribe()+"-----ClassName:"+task.getClassName() );
 		}
 		return isSuccess;
 	}
@@ -158,7 +160,7 @@ public class DynamicTask {
 						JSONObject json = HttpRequest.sendPost(url, param);
 						isSuccess = json.getBooleanValue("success");
 					} catch (Exception e) {
-						logger.info("远程主机‘"+task.getRunServer() + "’响应超时");
+						log.info("远程主机‘"+task.getRunServer() + "’响应超时");
 						return false;
 					}
 				}
@@ -167,16 +169,16 @@ public class DynamicTask {
 					task.setIsStart("1");
 					timeTaskService.updateEntitie(task);*/
 					systemService.addLog(("立即生效开启任务成功，任务ID:") + task.getTaskId(), Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-					logger.info(("立即生效开启任务成功，任务ID:") + "-------TaskId:" + task.getTaskId() + "-------Describe:" + task.getTaskDescribe() + "-----ClassName:" + task.getClassName() );
+					log.info(("立即生效开启任务成功，任务ID:") + "-------TaskId:" + task.getTaskId() + "-------Describe:" + task.getTaskDescribe() + "-----ClassName:" + task.getClassName() );
 					return true;
 				}else{
 					systemService.addLog(("立即生效开启任务失败，任务ID:") + task.getTaskId(), Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-					logger.info(("立即生效开启任务失败，任务ID:") + "-------TaskId:" + task.getTaskId() + "-------Describe:" + task.getTaskDescribe() + "-----ClassName:" + task.getClassName() );
+					log.info(("立即生效开启任务失败，任务ID:") + "-------TaskId:" + task.getTaskId() + "-------Describe:" + task.getTaskDescribe() + "-----ClassName:" + task.getClassName() );
 					return false;
 				}
 			}
 		} catch (SchedulerException e) {
-			logger.error("updateCronExpression SchedulerException" + " cron_" + task.getId() + e.getMessage());
+			log.error("updateCronExpression SchedulerException" + " cron_" + task.getId() + e.getMessage());
 		}
 		
 		return false;
@@ -209,15 +211,15 @@ public class DynamicTask {
 				task.setIsStart("1");
 				timeTaskService.updateEntitie(task);
 				systemService.addLog(("立即生效开启任务")+task.getTaskId(), Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-				logger.info(("立即生效开启任务")+"-------TaskId:"+task.getTaskId()+"-------Describe:"+task.getTaskDescribe()+"-----ClassName:"+task.getClassName() );
+				log.info(("立即生效开启任务")+"-------TaskId:"+task.getTaskId()+"-------Describe:"+task.getTaskDescribe()+"-----ClassName:"+task.getClassName() );
 			}
 
 			
 			return true;
 		} catch (SchedulerException e) {
-			logger.error("updateCronExpression SchedulerException" + " cron_" + task.getId() + e.getMessage());
+			log.error("updateCronExpression SchedulerException" + " cron_" + task.getId() + e.getMessage());
 		} catch (ParseException e) {
-			logger.error("updateCronExpression ParseException" + " cron_" + task.getId() + e.getMessage());
+			log.error("updateCronExpression ParseException" + " cron_" + task.getId() + e.getMessage());
 		}
 		
 		return false;
@@ -236,7 +238,7 @@ public class DynamicTask {
 		timTask.setIsEffect("1");
 		timTask.setIsStart("1");
 		List<TSTimeTaskEntity> tasks = (List<TSTimeTaskEntity>)timeTaskService.findByExample(TSTimeTaskEntity.class.getName(), timTask);
-		logger.info(" register time task class num is ["+tasks.size()+"] ");
+		log.info(" register time task class num is ["+tasks.size()+"] ");
 		if(tasks.size() > 0){
 			for (TSTimeTaskEntity task : tasks) {
 				//startTask(task);
@@ -256,10 +258,10 @@ public class DynamicTask {
 						//向调度器中添加任务
 						scheduleJob(task);
 
-						logger.info(" register time task class is { "+task.getClassName()+" } ");
+						log.info(" register time task class is { "+task.getClassName()+" } ");
 					}
 				} catch (SchedulerException e) {
-					logger.error("startTask SchedulerException"+" cron_" + task.getId()+ e.getMessage());	
+					log.error("startTask SchedulerException"+" cron_" + task.getId()+ e.getMessage());
 				}
 			}
 		}

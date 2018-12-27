@@ -8,7 +8,8 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.core.util.LogUtil;
 
 import com.alibaba.fastjson.JSONObject;
@@ -18,8 +19,9 @@ import com.alibaba.fastjson.JSONObject;
  * @author qinfeng
  *
  */
+@Slf4j
 public class JwtHttpUtil {
-	private static Logger log = Logger.getLogger(JwtHttpUtil.class);
+	//private static Logger log = Logger.getLogger(JwtHttpUtil.class);
 
 	/**
 	 * 发起https请求并获取结果

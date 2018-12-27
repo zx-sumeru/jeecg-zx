@@ -2,11 +2,12 @@ package org.jeecgframework.web.cgform.controller.enhance;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.web.cgform.entity.enhance.CgformEnhanceJsEntity;
 import org.jeecgframework.web.cgform.service.enhance.CgformEnhanceJsServiceI;
 import org.jeecgframework.web.system.service.SystemService;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgformEnhanceJsController")
 public class CgformEnhanceJsController extends BaseController {
@@ -38,7 +40,7 @@ public class CgformEnhanceJsController extends BaseController {
 	 * Logger for this class
 	 */
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(CgformEnhanceJsController.class);
+	//private static final Logger log = Logger.getLogger(CgformEnhanceJsController.class);
 
 	@Autowired
 	private CgformEnhanceJsServiceI cgformenhanceJsService;

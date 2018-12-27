@@ -18,8 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import jodd.io.StreamUtil;
 import jodd.io.ZipUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -62,13 +63,14 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgformTemplateController")
 public class CgformTemplateController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CgformTemplateController.class);
+	//private static final Logger log = Logger.getLogger(CgformTemplateController.class);
 
 	@Autowired
 	private CgformTemplateServiceI cgformTemplateService;
@@ -420,7 +422,7 @@ public class CgformTemplateController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();
@@ -548,7 +550,7 @@ public class CgformTemplateController extends BaseController {
 //			//out.flush();
 
 //		} catch (Exception e) {
-//			logger.error(e.toString());
+//			log.error(e.toString());
 ////			e.printStackTrace();
 //		} finally {
 //			if (fis != null) {
@@ -556,7 +558,7 @@ public class CgformTemplateController extends BaseController {
 //					fis.close();
 //					out.close();
 //				} catch (IOException e) {
-//					logger.info(e.toString());
+//					log.info(e.toString());
 //				}
 //			}
 //		}

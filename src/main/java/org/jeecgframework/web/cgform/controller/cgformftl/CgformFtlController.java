@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.common.UploadFile;
@@ -55,14 +56,14 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgformFtlController")
 public class CgformFtlController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger
-			.getLogger(CgformFtlController.class);
+	//private static final Logger log = Logger.getLogger(CgformFtlController.class);
 
 	@Autowired
 	private CgformFtlServiceI cgformFtlService;
@@ -115,7 +116,7 @@ public class CgformFtlController extends BaseController {
 				systemService.saveOrUpdate(t);
 				j.setSuccess(true);
 				j.setMsg("更新成功");
-				logger.info("["+IpUtil.getIpAddr(request)+"][online表单模板创建]更新成功");
+				log.info("["+IpUtil.getIpAddr(request)+"][online表单模板创建]更新成功");
 			} catch (Exception e) {
 				e.printStackTrace();
 				j.setSuccess(false);
@@ -174,7 +175,7 @@ public class CgformFtlController extends BaseController {
 		cgformFtlService.delete(cgformFtl);
 		systemService.addLog(message, Globals.Log_Type_DEL,
 				Globals.Log_Leavel_INFO);
-		logger.info("["+IpUtil.getIpAddr(request)+"][online表单模板删除]"+message);
+		log.info("["+IpUtil.getIpAddr(request)+"][online表单模板删除]"+message);
 		j.setMsg(message);
 		return j;
 	}
@@ -201,7 +202,7 @@ public class CgformFtlController extends BaseController {
 				templetContext.removeTemplateFromCache(po.getTableName()+"_"+TemplateUtil.TemplateType.DETAIL.getName());
 				templetContext.removeTemplateFromCache(po.getTableName()+"_"+TemplateUtil.TemplateType.UPDATE.getName());
 				systemService.addLog(message, Globals.Log_Type_UPDATE,Globals.Log_Leavel_INFO);
-				logger.info("["+IpUtil.getIpAddr(request)+"][online表单模板激活]"+message+"表名："+po.getTableName());
+				log.info("["+IpUtil.getIpAddr(request)+"][online表单模板激活]"+message+"表名："+po.getTableName());
 				j.setSuccess(true);
 				j.setMsg(message);
 			} else {
@@ -210,7 +211,7 @@ public class CgformFtlController extends BaseController {
 				j.setMsg(message);
 			}
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 			message = "激活失败";
 			j.setSuccess(false);
 			j.setMsg(message);
@@ -238,13 +239,13 @@ public class CgformFtlController extends BaseController {
 			cgformFtl.setFtlStatus("0");
 			cgformFtlService.saveOrUpdate(cgformFtl);
 			message = "取消激活成功";
-			logger.info("["+IpUtil.getIpAddr(request)+"][online表单模板取消激活]"+message+"表名："+po.getTableName());
+			log.info("["+IpUtil.getIpAddr(request)+"][online表单模板取消激活]"+message+"表名："+po.getTableName());
 			systemService.addLog(message, Globals.Log_Type_UPDATE,
 					Globals.Log_Leavel_INFO);
 			j.setSuccess(true);
 			j.setMsg(message);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 			message = "取消激活失败";
 			j.setSuccess(false);
 			j.setMsg(message);
@@ -515,7 +516,7 @@ public class CgformFtlController extends BaseController {
 				cgformFtlService.saveOrUpdate(cgformFtl);
 				LogUtil.info("-------------------------step.5-------------------------------------");
 			}
-			logger.info("["+IpUtil.getIpAddr(request)+"][online表单模板word上传]"+message+"表名："+cgformName);
+			log.info("["+IpUtil.getIpAddr(request)+"][online表单模板word上传]"+message+"表名："+cgformName);
 		} catch (Exception e1) {
 			LogUtil.error(e1.toString());
 			message = e1.toString();
@@ -631,7 +632,7 @@ public class CgformFtlController extends BaseController {
 			j.setMsg(message);
 			j.setSuccess(true);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 			e.printStackTrace();
 			message = "解析异常"+e.getMessage();
 			j.setSuccess(false);
@@ -663,7 +664,7 @@ public class CgformFtlController extends BaseController {
 
 			j.setSuccess(true);
 		} catch (Exception e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 			e.printStackTrace();
 			message = "解析异常"+e.getMessage();
 			j.setSuccess(false);

@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
@@ -57,13 +58,14 @@ import org.springframework.web.util.UriComponentsBuilder;
  * @version V1.0   
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("/cgFormIndexController")
 public class CgFormIndexController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CgFormIndexController.class);
+	//private static final Logger log = Logger.getLogger(CgFormIndexController.class);
 
 	@Autowired
 	private CgFormIndexServiceI cgFormIndexService;
@@ -308,7 +310,7 @@ public class CgFormIndexController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();

@@ -1,6 +1,7 @@
 package org.jeecgframework.core.interceptors;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.annotation.JAuth;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.constant.Globals;
@@ -39,9 +40,10 @@ import java.util.Set;
  * @Description:  [权限拦截器：  菜单访问权限、数据权限、按钮权限、页面表单权限]   
  * 
  */
+@Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 	 
-	private static final Logger logger = Logger.getLogger(AuthInterceptor.class);
+	//private static final Logger log = Logger.getLogger(AuthInterceptor.class);
 	@Autowired
 	private SystemService systemService;
 	@Resource
@@ -102,7 +104,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 				if(requestPath.endsWith("?olstylecode=")) {
 					requestPath = requestPath.replace("?olstylecode=", "");
 				}
-				logger.debug("-----authInterceptor----requestPath------"+requestPath);
+				log.debug("-----authInterceptor----requestPath------"+requestPath);
 				
 				//步骤三：  判断请求URL，是否有菜单访问权限 
 				if(!systemService.loginUserIsHasMenuAuth(requestPath,functionId,loginUserId,orgId)){

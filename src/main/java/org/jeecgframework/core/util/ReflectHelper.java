@@ -12,14 +12,16 @@ import java.util.regex.Pattern;
 
 import javax.persistence.Transient;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 /**
  * @author  张代浩
  * @desc 通过反射来动态调用get 和 set 方法
  */
+@Slf4j
 public class ReflectHelper {
-	private static final Logger logger = Logger.getLogger(ReflectHelper.class);
+	//private static final Logger log = Logger.getLogger(ReflectHelper.class);
 	
 	@SuppressWarnings("rawtypes")
 	private Class cls;
@@ -75,7 +77,7 @@ public class ReflectHelper {
 				param = setM.matcher(methodName).replaceAll(rapl).toLowerCase();
 				setMethods.put(param, m);
 			} else {
-				// logger.info(methodName + " 不是getter,setter方法！");
+				// log.info(methodName + " 不是getter,setter方法！");
 			}
 		}
 	}
@@ -92,7 +94,7 @@ public class ReflectHelper {
 				m.invoke(obj, object);
 				return true;
 			} catch (Exception ex) {
-				logger.info("invoke getter on " + property + " error: " + ex.toString());
+				log.info("invoke getter on " + property + " error: " + ex.toString());
 				return false;
 			}
 		}
@@ -114,7 +116,7 @@ public class ReflectHelper {
 				value=m.invoke(obj, new Object[] {});
 				
 			} catch (Exception ex) {
-				logger.info("invoke getter on " + property + " error: " + ex.toString());
+				log.info("invoke getter on " + property + " error: " + ex.toString());
 			}
 		}
 		return value;

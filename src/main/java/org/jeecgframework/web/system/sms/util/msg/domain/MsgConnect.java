@@ -4,7 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 import org.jeecgframework.web.system.sms.util.msg.util.MsgUtils;
 
@@ -21,8 +22,9 @@ import org.jeecgframework.web.system.sms.util.msg.util.MsgUtils;
  * 双方协商的版本号(高位4bit表示主版本号,低位4bit表示次版本号)，对于3.0的版本，高4bit为3，低4位为0<br/>
  * Timestamp:Unsigned Integer 时间戳的明文,由客户端产生,格式为MMDDHHMMSS，即月日时分秒，10位数字的整型，右对齐 。<br/>
  */
+@Slf4j
 public class MsgConnect extends MsgHead {
-	private static Logger logger = Logger.getLogger(MsgConnect.class);
+	//private static Logger log = Logger.getLogger(MsgConnect.class);
 	private String sourceAddr;// 源地址，此处为SP_Id，即SP的企业代码。
 	private byte[] authenticatorSource;// 用于鉴别源地址。其值通过单向MD5
 										// hash计算得出，表示如下：AuthenticatorSource =
@@ -50,7 +52,7 @@ public class MsgConnect extends MsgHead {
 			dous.writeInt(Integer.parseInt(MsgUtils.getTimestamp()));
 			dous.close();
 		} catch (IOException e) {
-			logger.error("封装链接二进制数组失败。");
+			log.error("封装链接二进制数组失败。");
 		}
 		return bous.toByteArray();
 	}

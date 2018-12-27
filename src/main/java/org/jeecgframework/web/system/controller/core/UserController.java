@@ -14,8 +14,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.hibernate.criterion.Property;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -76,10 +77,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @Description: TODO(用户管理处理类)
  * @author 张代浩
  */
+@Slf4j
 @Controller
 @RequestMapping("/userController")
 public class UserController extends BaseController {
-	private static final Logger logger = Logger.getLogger(UserController.class);
+	//private static final Logger log = Logger.getLogger(UserController.class);
 
 	private UserService userService;
 	private SystemService systemService;
@@ -294,7 +296,7 @@ public class UserController extends BaseController {
 	public AjaxJson savenewpwd(HttpServletRequest request) {
 		AjaxJson j = new AjaxJson();
 		TSUser user = ResourceUtil.getSessionUser();
-		logger.info("["+IpUtil.getIpAddr(request)+"][修改密码] start");
+		log.info("["+IpUtil.getIpAddr(request)+"][修改密码] start");
 		String password = oConvertUtils.getString(request.getParameter("password"));
 		String newpassword = oConvertUtils.getString(request.getParameter("newpassword"));
 		String pString = PasswordUtil.encrypt(user.getUserName(), password, PasswordUtil.getStaticSalt());
@@ -309,7 +311,7 @@ public class UserController extends BaseController {
 			}
 			systemService.updateEntitie(user);
 			j.setMsg("修改成功");
-			logger.info("["+IpUtil.getIpAddr(request)+"][修改密码]修改成功 userId:"+user.getUserName());
+			log.info("["+IpUtil.getIpAddr(request)+"][修改密码]修改成功 userId:"+user.getUserName());
 
 		}
 		return j;
@@ -324,7 +326,7 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(params = "changepasswordforuser")
 	public ModelAndView changepasswordforuser(TSUser user, HttpServletRequest req) {
-		logger.info("["+IpUtil.getIpAddr(req)+"][跳转重置用户密码页面]["+user.getUserName()+"]");
+		log.info("["+IpUtil.getIpAddr(req)+"][跳转重置用户密码页面]["+user.getUserName()+"]");
 		if (StringUtil.isNotEmpty(user.getId())) {
 			user = systemService.getEntity(TSUser.class, user.getId());
 			req.setAttribute("user", user);
@@ -344,7 +346,7 @@ public class UserController extends BaseController {
 	@RequestMapping(params = "savenewpwdforuser")
 	@ResponseBody
 	public AjaxJson savenewpwdforuser(HttpServletRequest req) {
-		logger.info("["+IpUtil.getIpAddr(req)+"][重置密码] start");
+		log.info("["+IpUtil.getIpAddr(req)+"][重置密码] start");
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		String id = oConvertUtils.getString(req.getParameter("id"));
@@ -354,7 +356,7 @@ public class UserController extends BaseController {
 			TSUser users = systemService.getEntity(TSUser.class,id);
 			if("admin".equals(users.getUserName()) && !"admin".equals(ResourceUtil.getSessionUser().getUserName())){
 				message = "超级管理员[admin]，只有admin本人可操作，其他人无权限!";
-				logger.info("["+IpUtil.getIpAddr(req)+"]"+message);
+				log.info("["+IpUtil.getIpAddr(req)+"]"+message);
 				j.setMsg(message);
 				return j;
 			}
@@ -366,7 +368,7 @@ public class UserController extends BaseController {
 			systemService.updateEntitie(users);	
 			message = "用户: " + users.getUserName() + "密码重置成功";
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(req)+"][重置密码]"+message);
+			log.info("["+IpUtil.getIpAddr(req)+"][重置密码]"+message);
 		} 
 		
 		j.setMsg(message);
@@ -401,7 +403,7 @@ public class UserController extends BaseController {
 			message = "用户：" + user.getUserName() + "激活成功!";
 		}
 		systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-		logger.info("["+IpUtil.getIpAddr(req)+"][锁定账户]"+message);
+		log.info("["+IpUtil.getIpAddr(req)+"][锁定账户]"+message);
 		}catch(Exception e){
 			message = "操作失败!";
 		}
@@ -614,7 +616,7 @@ public class UserController extends BaseController {
 			user.setDeleteFlag(Globals.Delete_Forbidden);
 			userService.updateEntitie(user);
 			message = "用户：" + user.getUserName() + "删除成功";
-			logger.info("["+IpUtil.getIpAddr(req)+"][逻辑删除用户]"+message);
+			log.info("["+IpUtil.getIpAddr(req)+"][逻辑删除用户]"+message);
 
 			
 /**
@@ -677,7 +679,7 @@ public class UserController extends BaseController {
 		
 		try {
 			message = userService.trueDel(user);
-			logger.info("["+IpUtil.getIpAddr(req)+"][真实删除用户]"+message);
+			log.info("["+IpUtil.getIpAddr(req)+"][真实删除用户]"+message);
 		} catch (Exception e) {
 			e.printStackTrace();
 			message ="删除失败";
@@ -784,7 +786,7 @@ public class UserController extends BaseController {
 		}
 		systemService.addLog(message, logType, Globals.Log_Leavel_INFO);
 		j.setMsg(message);
-		logger.info("["+IpUtil.getIpAddr(req)+"][添加编辑用户]"+message);
+		log.info("["+IpUtil.getIpAddr(req)+"][添加编辑用户]"+message);
 		return j;
 
 	}
@@ -1033,7 +1035,7 @@ public class UserController extends BaseController {
 
 		}
 		j.setMsg(message);
-		logger.info("["+IpUtil.getIpAddr(req)+"][添加编辑用户]"+message);
+		log.info("["+IpUtil.getIpAddr(req)+"][添加编辑用户]"+message);
 		return j;
 	}
 	
@@ -1359,18 +1361,18 @@ public class UserController extends BaseController {
 //				Cookie cookie4css = new Cookie("JEECGCSSTHEME", cssTheme);
 //				cookie4css.setMaxAge(3600*24*30);
 //				response.addCookie(cookie4css);
-//				logger.info("cssTheme:"+cssTheme);
+//				log.info("cssTheme:"+cssTheme);
 //			}else if("ace".equals(indexStyle)){
 //				Cookie cookie4css = new Cookie("JEECGCSSTHEME", "metro");
 //				cookie4css.setMaxAge(3600*24*30);
 //				response.addCookie(cookie4css);
-//				logger.info("cssTheme:metro");
+//				log.info("cssTheme:metro");
 
 //			}else {
 //				Cookie cookie4css = new Cookie("JEECGCSSTHEME", "");
 //				cookie4css.setMaxAge(3600*24*30);
 //				response.addCookie(cookie4css);
-//				logger.info("cssTheme:default");
+//				log.info("cssTheme:default");
 //			}
 
 			
@@ -1379,7 +1381,7 @@ public class UserController extends BaseController {
 				//设置cookie有效期为一个月
 				cookie.setMaxAge(3600*24*30);
 				response.addCookie(cookie);
-				logger.debug(" ----- 首页样式: indexStyle ----- "+indexStyle);
+				log.debug(" ----- 首页样式: indexStyle ----- "+indexStyle);
 				j.setSuccess(Boolean.TRUE);
 				j.setMsg("样式修改成功，请刷新页面");
 			}
@@ -1590,7 +1592,7 @@ public class UserController extends BaseController {
 				}
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();

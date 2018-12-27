@@ -8,7 +8,8 @@ import javax.servlet.jsp.JspWriter;
 
 import jodd.util.StringUtil;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.enums.SysThemesEnum;
 import org.jeecgframework.core.util.ContextHolderUtils;
 import org.jeecgframework.core.util.ResourceUtil;
@@ -21,8 +22,9 @@ import org.jeecgframework.tag.core.JeecgTag;
  * @author  张代浩
  *
  */
+@Slf4j
 public class BaseTag extends JeecgTag {
-	private static Logger log = Logger.getLogger(BaseTag.class);
+	//private static Logger log = Logger.getLogger(BaseTag.class);
 	private static final long serialVersionUID = 1L;
 	protected String type = "default";// 加载类型
 	protected String cssTheme ;

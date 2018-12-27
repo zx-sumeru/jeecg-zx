@@ -1,7 +1,5 @@
 package org.jeecgframework.web.cgform.controller.excel;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,13 +11,13 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.common.model.json.DataGrid;
-import org.jeecgframework.core.constant.DataBaseConstant;
 import org.jeecgframework.core.util.DBTypeUtil;
 import org.jeecgframework.core.util.ExceptionUtil;
 import org.jeecgframework.core.util.MutiLangUtil;
@@ -57,19 +55,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * @author huiyong
  * @ClassName: excelTempletController
  * @Description: excel模版处理
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/excelTempletController")
 public class ExcelTempletController extends BaseController {
-	private static final Logger logger = Logger
-			.getLogger(ExcelTempletController.class);
+	//private static final Logger log = Logger.getLogger(ExcelTempletController.class);
 	@Autowired
 	private ConfigServiceI configService;
 	@Autowired
@@ -309,7 +305,7 @@ public class ExcelTempletController extends BaseController {
 					//--author：JueYue---------date:20150622--------for: 修改为EasyPoi 的导入
 					if (listDate == null) {
 						message = "识别模版数据错误";
-						logger.error(message);
+						log.error(message);
 					} else {
 						//--author：zhoujf---start------date:20170207--------for:online表单物理表查询数据异常处理
 						configId = configId.split("__")[0];
@@ -390,12 +386,12 @@ public class ExcelTempletController extends BaseController {
 					}
 				} catch (Exception e) {
 					message = "文件导入失败！";
-					logger.error(ExceptionUtil.getExceptionMessage(e));
+					log.error(ExceptionUtil.getExceptionMessage(e));
 				}
 				//--author：luobaoli---------date:20150615--------for: 处理service层抛出的异常
 			} else {
 				message = "模版文件版本和表达不匹配，请重新下载模版";
-				logger.error(message);
+				log.error(message);
 			}
 		}
 		j.setMsg(message);
@@ -421,14 +417,17 @@ public class ExcelTempletController extends BaseController {
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					//log.error(e,e);
+                    log.error("错误", e);
+
 				}
 			}else if(StringUtil.isNotEmpty(dbType)&&"postgres".equalsIgnoreCase(dbType)){
 				PostgreSQLSequenceMaxValueIncrementer incr = new PostgreSQLSequenceMaxValueIncrementer(dataSource, "HIBERNATE_SEQUENCE");
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					//log.error(e,e);
+                    log.error("异常， ", e);
 				}
 			}else{
 				pkValue = null;
@@ -439,14 +438,16 @@ public class ExcelTempletController extends BaseController {
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					//log.error(e,e);
+                    log.error("异常， ", e);
 				}
 			}else if(StringUtil.isNotEmpty(dbType)&&"postgres".equalsIgnoreCase(dbType)){
 				PostgreSQLSequenceMaxValueIncrementer incr = new PostgreSQLSequenceMaxValueIncrementer(dataSource, pkSequence);
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+                    //log.error(e, e);
+                    log.error("异常， ", e);
 				}
 			}else{
 				pkValue = null;

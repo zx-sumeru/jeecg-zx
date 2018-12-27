@@ -13,8 +13,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -48,9 +49,10 @@ import org.springframework.transaction.annotation.Transactional;
  * @author  张代浩
  *
  */
+@Slf4j
 @Service("userService")
 public class UserServiceImpl extends CommonServiceImpl implements UserService {
-	private Logger log = Logger.getLogger(UserServiceImpl.class);
+	//private Logger log = Logger.getLogger(UserServiceImpl.class);
 	@Autowired
 	private MutiLangServiceI mutiLangService;
 	@Resource

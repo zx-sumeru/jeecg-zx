@@ -10,8 +10,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -68,13 +69,14 @@ import com.alibaba.fastjson.JSONArray;
  * 
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/departController")
 public class DepartController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(DepartController.class);
+	//private static final Logger log = Logger.getLogger(DepartController.class);
 	private UserService userService;
 	private SystemService systemService;
 	@Autowired
@@ -706,7 +708,7 @@ public class DepartController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();
@@ -826,7 +828,7 @@ public class DepartController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();

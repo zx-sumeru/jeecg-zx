@@ -12,7 +12,8 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 /**
  * 
@@ -24,8 +25,9 @@ import org.apache.log4j.Logger;
  * @date 20130817
  * @version V1.0
  */
+@Slf4j
 public class PackagesToScanUtil {
-	private static final Logger logger = Logger.getLogger(PackagesToScanUtil.class);
+	//private static final Logger log = Logger.getLogger(PackagesToScanUtil.class);
 	private static final String SUB_PACKAGE_SCREEN__SUFFIX = ".*";
 	private static final String SUB_PACKAGE_SCREEN__SUFFIX_RE = ".\\*";//替换使用
 
@@ -72,7 +74,7 @@ public class PackagesToScanUtil {
 				String protocol = url.getProtocol();
 				// 如果是以文件的形式保存在服务器上
 				if ("file".equals(protocol)) {
-					logger.debug("-------------- file类型的扫描 ----------------");
+					log.debug("-------------- file类型的扫描 ----------------");
 					// 获取包的物理路径
 					String filePath = URLDecoder.decode(url.getFile(), "UTF-8");
 
@@ -151,7 +153,7 @@ public class PackagesToScanUtil {
 						classes.add(Thread.currentThread().getContextClassLoader().loadClass(classUrl));
 					}
 				} catch (ClassNotFoundException e) {
-					logger.error("添加用户自定义视图类错误 找不到此类的.class文件");
+					log.error("添加用户自定义视图类错误 找不到此类的.class文件");
 					e.printStackTrace();
 				}
 			}
@@ -173,7 +175,7 @@ public class PackagesToScanUtil {
 	private static void findAndAddClassesInPackageByJarFile(String packageName, String[] packArr, URL url, String packageDirName, final boolean recursive, Set<Class<?>> classes) {
 		// 如果是jar包文件
 		// 定义一个JarFile
-		logger.debug("------------------------ jar类型的扫描 ----------------------");
+		log.debug("------------------------ jar类型的扫描 ----------------------");
 		JarFile jar;
 		try {
 			// 获取jar
@@ -222,7 +224,7 @@ public class PackagesToScanUtil {
 									classes.add(Class.forName(packageName + '.' + className));
 								}
 							} catch (ClassNotFoundException e) {
-								logger.error("添加用户自定义视图类错误 找不到此类的.class文件");
+								log.error("添加用户自定义视图类错误 找不到此类的.class文件");
 								e.printStackTrace();
 							}
 						}
@@ -230,7 +232,7 @@ public class PackagesToScanUtil {
 				}
 			}
 		} catch (IOException e) {
-			logger.error("在扫描用户定义视图时从jar包获取文件出错");
+			log.error("在扫描用户定义视图时从jar包获取文件出错");
 			e.printStackTrace();
 		}
 	}

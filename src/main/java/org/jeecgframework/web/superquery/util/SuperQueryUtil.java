@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.core.util.oConvertUtils;
 import org.jeecgframework.web.system.service.SystemService;
@@ -23,9 +24,10 @@ import com.alibaba.fastjson.JSONObject;
  * @author LiShaoQing
  *
  */
+@Slf4j
 public class SuperQueryUtil {
 	
-private static final Logger logger = Logger.getLogger(SuperQueryUtil.class);
+//private static final Logger log = Logger.getLogger(SuperQueryUtil.class);
 	
 	/**
 	 * 根据SqlBuilder的JSON数据拼装SQL语句
@@ -53,7 +55,7 @@ private static final Logger logger = Logger.getLogger(SuperQueryUtil.class);
 			List<Map<String,Object>> fromName = systemService.findForJdbc(sql1, queryCode);
 			//queryRules为所查询的所有信息。
 			JSONArray queryRules = (JSONArray) parseObject.get("children");
-			logger.info("------" + queryRules.toString() + "------");
+			log.info("------" + queryRules.toString() + "------");
 			//step.4 拼接主从表
 			String mainTable = "";//主表
 			List<String> fromTable = new ArrayList<String>();//从表

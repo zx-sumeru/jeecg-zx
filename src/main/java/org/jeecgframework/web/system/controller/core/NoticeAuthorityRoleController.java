@@ -5,7 +5,8 @@ import java.util.concurrent.Executors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -36,11 +37,12 @@ import org.springframework.web.servlet.ModelAndView;
 //@Scope("prototype")
 @Controller
 @RequestMapping("/noticeAuthorityRoleController")
+@Slf4j
 public class NoticeAuthorityRoleController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(NoticeAuthorityRoleController.class);
+	//private static final Logger log = Logger.getLogger(NoticeAuthorityRoleController.class);
 
 	@Autowired
 	private NoticeAuthorityRoleServiceI noticeAuthorityRoleService;

@@ -2,7 +2,8 @@ package org.jeecgframework.web.system.sms.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -35,13 +36,14 @@ import org.jeecgframework.web.system.sms.service.TSSmsSqlServiceI;
  *
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/tSSmsSqlController")
 public class TSSmsSqlController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(TSSmsSqlController.class);
+	//private static final Logger log = Logger.getLogger(TSSmsSqlController.class);
 
 	@Autowired
 	private TSSmsSqlServiceI tSSmsSqlService;
@@ -338,7 +340,7 @@ public class TSSmsSqlController extends BaseController {
 //				j.setMsg("文件导入成功！");
 //			} catch (Exception e) {
 //				j.setMsg("文件导入失败！");
-//				logger.error(ExceptionUtil.getExceptionMessage(e));
+//				log.error(ExceptionUtil.getExceptionMessage(e));
 //			}finally{
 //				try {
 //					file.getInputStream().close();

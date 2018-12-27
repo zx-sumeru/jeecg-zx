@@ -18,11 +18,83 @@
         <java.version>1.8</java.version>
 
         <minidao.version>1.6.7</minidao.version>
+        <codegenerate.version>3.6.4</codegenerate.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
+        <jeasypoi.version>2.2.0</jeasypoi.version>
+
+        <!-- jeecg-p3 -->
+        <jeecg-p3-core.version>1.0.0</jeecg-p3-core.version>
+        <jeecg-p3-biz-demo.version>1.0.2</jeecg-p3-biz-demo.version>
+        <jeecg-p3-biz-chat.version>1.0.5</jeecg-p3-biz-chat.version>
+        <jeecg-p3-biz-mail.version>1.0.0</jeecg-p3-biz-mail.version>
+
+        <jodconverter.version>3.0-beta-4</jodconverter.version>
 
 
     </properties>
 
     <dependencies>
+
+        <!--jeecg 包-->
+        <dependency>
+            <groupId>org.jeecgframework</groupId>
+            <artifactId>codegenerate</artifactId>
+            <version>${codegenerate.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/codegenerate-3.6.4-20180823.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.artofsolving</groupId>
+            <artifactId>jodconverter</artifactId>
+            <version>${jodconverter.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jodconverter-3.0-beta-4-20170917.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jeecgframework</groupId>
+            <artifactId>jeasypoi-web</artifactId>
+            <version>${jeasypoi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jeecgframework</groupId>
+            <artifactId>jeasypoi-base</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+        <!-- Jeecg Plugin begin -->
+        <!-- p3 core -->
+        <dependency>
+            <groupId>org.jeecgframework.p3</groupId>
+            <artifactId>jeecg-p3-core-api</artifactId>
+            <version>${jeecg-p3-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jeecgframework.p3</groupId>
+            <artifactId>jeecg-p3-core</artifactId>
+            <version>${jeecg-p3-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jeecgframework.p3</groupId>
+            <artifactId>jeecg-p3-core-ui</artifactId>
+            <version>${jeecg-p3-core.version}</version>
+        </dependency>
+        <!-- 插件：Demo -->
+        <dependency>
+            <groupId>org.jeecgframework.p3</groupId>
+            <artifactId>jeecg-p3-biz-demo</artifactId>
+            <version>${jeecg-p3-biz-demo.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jeecgframework.p3</groupId>
+                    <artifactId>jeecg-p3-start-quick</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--###########################-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
@@ -68,7 +140,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <!--<version>1.6</version>-->
+            <version>1.6</version>
         </dependency>
 
         <dependency>
@@ -76,6 +148,26 @@
             <artifactId>commons-dbcp2</artifactId>
             <!--<version>2.5.0</version>-->
         </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -88,11 +180,7 @@
             <version>${minidao.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.54</version>
-        </dependency>
+
 
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -105,10 +193,64 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <!--<version>2.1.1.RELEASE</version>-->
         </dependency>
+
+
+        <!--office相关-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <!--<version>4.0.1</version>-->
+            <version>3.9</version> <!--jeecg原版本-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hynnet</groupId>
+            <artifactId>jacob</artifactId>
+            <version>1.18</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>net.sf.jxls</groupId>
+            <artifactId>jxls-core</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+        </dependency>
+
+        <!--json-->
+
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <!--<version>2.4</version>-->
+            <version>2.1</version><!--jeecg版本-->
+            <classifier>jdk15</classifier><!--jeecg-->
+        </dependency>
+
+
+
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.54</version>
+        </dependency>
+
         <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-            <!--<artifactId>jackson-databind</artifactId>-->
-            <!--&lt;!&ndash;<version>2.9.6</version>&ndash;&gt;-->
+        <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+        <!--<artifactId>jackson-databind</artifactId>-->
+        <!--&lt;!&ndash;<version>2.9.6</version>&ndash;&gt;-->
         <!--</dependency>-->
 
         <dependency>
@@ -117,15 +259,90 @@
             <version>1.9.13</version>
         </dependency>
 
+        <!--===================================-->
+
+
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>4.0.1</version>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd</artifactId>
+            <!--<version>3.4.1</version>-->
+            <version>3.3.7</version>
+            <!--<type>pom</type>-->
+        </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.jodd</groupId>-->
+            <!--<artifactId>jodd-core</artifactId>-->
+            <!--<version>5.0.6</version>-->
+        <!--</dependency>-->
 
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>${pinyin4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-email</artifactId>
+            <version>1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.8.2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.10</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>fop</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>kisso</artifactId>
+            <!--<version>3.7.3</version>-->
+            <version>3.6.11</version><!--jeecg-->
+        </dependency>
 
 
     </dependencies>

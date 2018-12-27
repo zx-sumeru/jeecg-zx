@@ -9,8 +9,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -65,13 +66,14 @@ import com.alibaba.fastjson.JSONArray;
  * @author LiShaoQing
  * 
  */
+@Slf4j
 @Controller
 @RequestMapping("/organzationController")
 public class OrganzationController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(OrganzationController.class);
+	//private static final Logger log = Logger.getLogger(OrganzationController.class);
 	private UserService userService;
 	private SystemService systemService;
 
@@ -907,10 +909,11 @@ public class OrganzationController extends BaseController {
 						String orgcode = tsDepart.getOrgCode();
 						String parentOrgCode = orgcode.substring(0,orgcode.length()-3);
 
-						List<TSDepart> parentList = systemService.getSession().createSQLQuery("select * from t_s_depart where ORG_CODE = :parentOrgCode")
-								.addEntity(TSDepart.class)
-								.setString("parentOrgCode",parentOrgCode)
-								.list();
+                        List<TSDepart> parentList = systemService.getSession().createSQLQuery("select * from t_s_depart where ORG_CODE = :parentOrgCode")
+                                .addEntity(TSDepart.class)
+                                //.setString("parentOrgCode",parentOrgCode)
+                                .setParameter("parentOrgCode", parentOrgCode)
+                                .list();
 						if(parentList.size() > 0){
 							TSDepart parentDept =  parentList.get(0);
 							tsDepart.setTSPDepart(parentDept);
@@ -923,7 +926,7 @@ public class OrganzationController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();
@@ -1094,7 +1097,7 @@ public class OrganzationController extends BaseController {
 			String id = request.getParameter("id");
 			String name = request.getParameter("name");
 			String level = request.getParameter("level");
-			logger.info("------id----"+id+"----name----"+name+"----level-----"+level);
+			log.info("------id----"+id+"----name----"+name+"----level-----"+level);
 		    //如果id为空，则查询一级节点
 			if(StringUtils.isEmpty(id)){
 				String hql = "from TSDepart t where t.TSPDepart is null order by t.departOrder";
@@ -1127,7 +1130,7 @@ public class OrganzationController extends BaseController {
 			String id = request.getParameter("id");
 			String name = request.getParameter("name");
 			String level = request.getParameter("level");
-			logger.debug("------id----"+id+"----name----"+name+"----level-----"+level);
+			log.debug("------id----"+id+"----name----"+name+"----level-----"+level);
 		    //如果id不为空，则查询当前节点子节点
 			if(StringUtils.isNotEmpty(id)){
 				String hql = "from TSDepart t where t.TSPDepart.id = ? order by t.departOrder";

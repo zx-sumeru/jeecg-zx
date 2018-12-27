@@ -5,9 +5,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.web.cgform.service.config.CgFormFieldServiceI;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.interceptors.AuthInterceptor;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.StringUtil;
@@ -20,10 +21,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @author 张代浩
  *
  */
+@Slf4j
 public class CgFormVersionInterceptor  implements HandlerInterceptor {
 	private List<String> includeUrls;
 	
-	private static final Logger logger = Logger.getLogger(AuthInterceptor.class);
+	//private static final Logger log = Logger.getLogger(AuthInterceptor.class);
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
 	
@@ -43,7 +45,7 @@ public class CgFormVersionInterceptor  implements HandlerInterceptor {
 				cgFormFieldService.updateVersion(formId);
 			}catch (Exception e) {
 				e.printStackTrace();
-				logger.debug(e.getMessage());
+				log.debug(e.getMessage());
 			}
 		}
 	}

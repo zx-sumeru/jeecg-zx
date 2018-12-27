@@ -24,8 +24,7 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class CMPPSenderUtil {
 
-	private static Logger logger = LoggerFactory
-			.getLogger(CMPPSenderUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(CMPPSenderUtil.class);
 
 	/**
 	 * 向单个号码发送短信.

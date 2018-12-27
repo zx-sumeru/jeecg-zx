@@ -1,7 +1,9 @@
 package org.jeecgframework.tag.core;
 
 import javax.servlet.jsp.tagext.TagSupport;
-import org.apache.log4j.Logger;
+
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.util.ApplicationContextUtil;
 import org.jeecgframework.web.cgform.common.CgAutoListConstant;
 import org.jeecgframework.web.cgform.engine.TempletContext;
@@ -12,8 +14,9 @@ import org.jeecgframework.web.system.service.CacheServiceI;
  * 【优化系统】父Tag标签，主要为做缓存使用
  * @author yugw
  */
+@Slf4j
 public abstract class JeecgTag extends TagSupport {
-	private Logger log = Logger.getLogger(LoginController.class);
+	//private Logger log = Logger.getLogger(LoginController.class);
 	private static final long serialVersionUID = 1L;
 	
 	/**

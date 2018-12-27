@@ -6,7 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 /**
  * . 所有请求的消息头<br/>
@@ -20,9 +21,9 @@ import org.apache.log4j.Logger;
  * @author skycc
  * 2014-11-17 11:34 
  */
-
+@Slf4j
 public class MsgHead {
-	private Logger logger = Logger.getLogger(MsgHead.class);
+	//private Logger log = Logger.getLogger(MsgHead.class);
 	private int totalLength;// Unsigned Integer 消息总长度
 	private int commandId;// Unsigned Integer 命令类型
 	private int sequenceId;// Unsigned Integer
@@ -42,7 +43,7 @@ public class MsgHead {
 			dous.writeInt(this.getSequenceId());
 			dous.close();
 		} catch (IOException e) {
-			logger.error("封装CMPP消息头二进制数组失败。");
+			log.error("封装CMPP消息头二进制数组失败。");
 		}
 		return bous.toByteArray();
 	}

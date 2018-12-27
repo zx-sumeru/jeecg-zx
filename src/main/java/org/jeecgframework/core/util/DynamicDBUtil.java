@@ -12,6 +12,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 //import org.apache.log4j.Logger;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jeecgframework.minidao.util.FreemarkerParseFactory;
+import org.jeecgframework.web.system.pojo.base.DynamicDataSourceEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 

@@ -15,8 +15,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.codegenerate.database.JeecgReadTable;
 import org.jeecgframework.codegenerate.extcommon.CreateFileConfig;
 import org.jeecgframework.codegenerate.extcommon.onetomany.CgformCodeOne2ManyExtCommonGenerate;
@@ -31,7 +32,6 @@ import org.jeecgframework.codegenerate.util.CodeStringUtils;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.enums.OnlineGenerateEnum;
-import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.core.util.oConvertUtils;
 import org.jeecgframework.web.cgform.entity.button.CgformButtonEntity;
@@ -67,13 +67,14 @@ import com.alibaba.fastjson.JSONObject;
  * @date Sep 7, 2013 12:19:32 PM
  * @version V1.0
  */
+@Slf4j
 @Controller
 @RequestMapping("/generateController")
 public class GenerateController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(GenerateController.class);
+	//private static final Logger log = Logger.getLogger(GenerateController.class);
 	
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
@@ -489,7 +490,7 @@ public class GenerateController extends BaseController {
 		try{
 			listJsCopy = listJs.deepCopy();
 		}catch (Exception e) {
-			logger.debug(e.getMessage());
+			log.debug(e.getMessage());
 		}
 		//JS增强-表单
 		CgformEnhanceJsEntity formJs = 	cgformEnhanceJsService.getCgformEnhanceJsByTypeFormId("form", cgFormHead.getId());
@@ -497,7 +498,7 @@ public class GenerateController extends BaseController {
 		try{
 			formJsCopy = formJs.deepCopy();
 		}catch (Exception e) {
-			logger.debug(e.getMessage());
+			log.debug(e.getMessage());
 		}
 		//将js中带有online字段名的 转换成java命名
 		for(CgFormFieldEntity field : cgFormHead.getColumns()){
@@ -597,7 +598,7 @@ public class GenerateController extends BaseController {
 				return true;
 			}
 		}catch (Exception e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 			return false;
 		}
 	}

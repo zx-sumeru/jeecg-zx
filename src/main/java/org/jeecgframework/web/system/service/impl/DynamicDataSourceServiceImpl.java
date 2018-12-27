@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.jeecgframework.core.common.dao.ICommonDao;
 import org.jeecgframework.core.util.ResourceUtil;
+import org.jeecgframework.web.system.pojo.base.DynamicDataSourceEntity;
 import org.jeecgframework.web.system.service.CacheServiceI;
 import org.jeecgframework.web.system.service.DynamicDataSourceServiceI;
 import org.slf4j.Logger;

@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.web.system.sms.util.msg.domain.MsgCommand;
 import org.jeecgframework.web.system.sms.util.msg.domain.MsgConnect;
 import org.jeecgframework.web.system.sms.util.msg.domain.MsgHead;
@@ -24,8 +25,9 @@ import org.jeecgframework.web.system.sms.util.msg.domain.MsgSubmit;
  * @author 张科伟 2011-08-22 14:20
  * 
  */
+@Slf4j
 public class MsgContainer {
-	private static Logger logger = Logger.getLogger(MsgContainer.class);
+	//private static Logger log = Logger.getLogger(MsgContainer.class);
 	private static Socket msgSocket;
 	private static DataInputStream in;
 	private static DataOutputStream out;
@@ -84,7 +86,7 @@ public class MsgContainer {
 				out = getSocketDOS();
 				int count = 0;
 				boolean result = connectISMG();
-				logger.info("result" + result);
+				log.info("result" + result);
 				while (!result) {
 					count++;
 					result = connectISMG();
@@ -93,10 +95,10 @@ public class MsgContainer {
 					}
 				}// */
 			} catch (UnknownHostException e) {
-				logger.error("Socket链接短信网关端口号不正确：" + e.getMessage());
+				log.error("Socket链接短信网关端口号不正确：" + e.getMessage());
 				// 链接短信网关
 			} catch (IOException e) {
-				logger.error("Socket链接短信网关失败：" + e.getMessage());
+				log.error("Socket链接短信网关失败：" + e.getMessage());
 			}
 		}
 		return msgSocket;
@@ -118,13 +120,13 @@ public class MsgContainer {
 		connect.setTimestamp(Integer.parseInt(MsgUtils.getTimestamp()));// 时间戳(MMDDHHMMSS)
 		// connect.setTimestamp(1104230904);//时间戳(MMDDHHMMSS)423202240
 		connect.setVersion((byte) 0x30);// 版本号 高4bit为3，低4位为0
-		logger.error("消息长度:" + connect.getTotalLength());
-		logger.error("标识:" + connect.getCommandId());
-		logger.error("序列:" + connect.getSequenceId());
-		logger.error("企业id:" + connect.getSourceAddr());
-		logger.error("md5:" + connect.getAuthenticatorSource().length);
-		logger.error("时间戳:" + connect.getTimestamp());
-		logger.error("版本号:" + connect.getVersion());
+		log.error("消息长度:" + connect.getTotalLength());
+		log.error("标识:" + connect.getCommandId());
+		log.error("序列:" + connect.getSequenceId());
+		log.error("企业id:" + connect.getSourceAddr());
+		log.error("md5:" + connect.getAuthenticatorSource().length);
+		log.error("时间戳:" + connect.getTimestamp());
+		log.error("版本号:" + connect.getVersion());
 		List<byte[]> dataList = new ArrayList<byte[]>();
 		dataList.add(connect.toByteArry());
 		CmppSender sender = new CmppSender(getSocketDOS(), getSocketDIS(),
@@ -231,7 +233,7 @@ public class MsgContainer {
 			} catch (IOException e1) {
 				out = null;
 			}
-			logger.error("发送web push短信:" + e.getMessage());
+			log.error("发送web push短信:" + e.getMessage());
 			return false;
 		}
 	}
@@ -275,7 +277,7 @@ public class MsgContainer {
 			CmppSender sender = new CmppSender(getSocketDOS(), getSocketDIS(),
 					dataList);
 			sender.start();
-			logger.info("数据乐园于"
+			log.info("数据乐园于"
 					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 							.format(new Date()) + "向" + cusMsisdn
 					+ "下发短短信，序列号为:" + seq);
@@ -286,7 +288,7 @@ public class MsgContainer {
 			} catch (IOException e1) {
 				out = null;
 			}
-			logger.error("发送短短信" + e.getMessage());
+			log.error("发送短短信" + e.getMessage());
 			return false;
 		}
 	}
@@ -361,7 +363,7 @@ public class MsgContainer {
 			CmppSender sender = new CmppSender(getSocketDOS(), getSocketDIS(),
 					dataList);
 			sender.start();
-			logger.info("数据乐园于"
+			log.info("数据乐园于"
 					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 							.format(new Date()) + "向" + cusMsisdn
 					+ "下发长短信，序列号为:" + seqId);
@@ -372,7 +374,7 @@ public class MsgContainer {
 			} catch (IOException e1) {
 				out = null;
 			}
-			logger.error("发送长短信" + e.getMessage());
+			log.error("发送长短信" + e.getMessage());
 			return false;
 		}
 	}
@@ -406,7 +408,7 @@ public class MsgContainer {
 				in = null;
 				out = null;
 			}
-			logger.error("拆除与ISMG的链接" + e.getMessage());
+			log.error("拆除与ISMG的链接" + e.getMessage());
 			return false;
 		}
 	}
@@ -418,7 +420,7 @@ public class MsgContainer {
 	 */
 	public static boolean activityTestISMG() {
 		try {
-			logger.info("activityTestISMG================start");
+			log.info("activityTestISMG================start");
 			MsgHead head = new MsgHead();
 			head.setTotalLength(12);// 消息总长度，级总字节数:4+4+4(消息头)+6+16+1+4(消息主体)
 			head.setCommandId(MsgCommand.CMPP_ACTIVE_TEST);// 标识创建连接
@@ -428,16 +430,16 @@ public class MsgContainer {
 			CmppSender sender = new CmppSender(getSocketDOS(), getSocketDIS(),
 					dataList);
 			sender.start();
-			logger.info("activityTestISMG================end");
+			log.info("activityTestISMG================end");
 			return true;
 		} catch (Exception e) {
 			try {
 				out.close();
-				logger.info("activityTestISMG================end");
+				log.info("activityTestISMG================end");
 			} catch (IOException e1) {
 				out = null;
 			}
-			logger.error("链路检查" + e.getMessage());
+			log.error("链路检查" + e.getMessage());
 			return false;
 		}
 	}
@@ -515,7 +517,7 @@ public class MsgContainer {
 			CmppSender sender = new CmppSender(getSocketDOS(), getSocketDIS(),
 					dataList);
 			sender.start();
-			logger.info("数据乐园于"
+			log.info("数据乐园于"
 					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 							.format(new Date()) + "向" + cusMsisdn
 					+ "下发web push短短信，序列号为:" + seq);
@@ -526,7 +528,7 @@ public class MsgContainer {
 			} catch (IOException e1) {
 				out = null;
 			}
-			logger.error("发送web push短短信" + e.getMessage());
+			log.error("发送web push短短信" + e.getMessage());
 			return false;
 		}
 	}
@@ -626,7 +628,7 @@ public class MsgContainer {
 			CmppSender sender = new CmppSender(getSocketDOS(), getSocketDIS(),
 					dataList);
 			sender.start();
-			logger.info("数据乐园于"
+			log.info("数据乐园于"
 					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 							.format(new Date()) + "向" + cusMsisdn
 					+ "下发web pus长短信，序列号为:" + seqId);
@@ -637,7 +639,7 @@ public class MsgContainer {
 			} catch (IOException e1) {
 				out = null;
 			}
-			logger.error("发送web push长短信" + e.getMessage());
+			log.error("发送web push长短信" + e.getMessage());
 			return false;
 		}
 	}

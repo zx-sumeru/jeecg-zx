@@ -5,7 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.annotation.Ehcache;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.web.cgform.common.CgAutoListConstant;
@@ -28,10 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @date Jul 5, 2013 9:35:22 PM
  * @version V1.0
  */
+@Slf4j
 @Service("configService")
 @Transactional
 public class ConfigServiceImpl implements ConfigServiceI {
-	private static Logger log = Logger.getLogger(ConfigServiceImpl.class);
+	//private static Logger log = Logger.getLogger(ConfigServiceImpl.class);
 	
 	@Autowired
 	private CgFormFieldServiceI tablePropertyService;

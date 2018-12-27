@@ -14,12 +14,14 @@ import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.web.cgform.entity.upload.CgUploadEntity;
 import org.jeecgframework.web.cgform.service.upload.CgUploadServiceI;
 import org.jeecgframework.web.system.pojo.base.TSAttachment;
 import org.jeecgframework.web.system.service.SystemService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.common.UploadFile;
@@ -52,13 +54,14 @@ import net.sf.json.JSONObject;
  * @version V1.0
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgUploadController")
 public class CgUploadController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CgUploadController.class);
+	//private static final Logger log = Logger.getLogger(CgUploadController.class);
 	
 	@Autowired
 	private SystemService systemService;
@@ -81,7 +84,7 @@ public class CgUploadController extends BaseController {
 		String id = oConvertUtils.getString(request.getParameter("cgFormId"));//动态表主键ID
 		String tableName = oConvertUtils.getString(request.getParameter("cgFormName"));//动态表名
 		String cgField = oConvertUtils.getString(request.getParameter("cgFormField"));//动态表上传控件字段
-		logger.info("--cgUploadController--saveFiles--上传文件-----"+"{id:"+id+"}  {tableName："+tableName+"}  {cgField:"+cgField+"}");
+		log.info("--cgUploadController--saveFiles--上传文件-----"+"{id:"+id+"}  {tableName："+tableName+"}  {cgField:"+cgField+"}");
 		if(!StringUtil.isEmpty(id)){
 			cgUploadEntity.setCgformId(id);
 			cgUploadEntity.setCgformName(tableName);
@@ -96,12 +99,12 @@ public class CgUploadController extends BaseController {
 		uploadFile.setSwfpath("swfpath");
 		uploadFile.setByteField(null);//不存二进制内容
 		cgUploadEntity = systemService.uploadFile(uploadFile);
-		logger.info("--cgUploadController--saveFiles--上传文件----数据库保存转换成功-----");
+		log.info("--cgUploadController--saveFiles--上传文件----数据库保存转换成功-----");
 
 		String realPath = cgUploadEntity.getRealpath();
 		realPath = realPath.replace(File.separator, "/");
 		cgUploadService.writeBack(id, tableName, cgField, fileKey, realPath);
-		logger.info("--cgUploadController--saveFiles--上传文件----回写业务数据表字段文件路径-----");
+		log.info("--cgUploadController--saveFiles--上传文件----回写业务数据表字段文件路径-----");
 
 		attributes.put("url", realPath);
 		attributes.put("name", cgUploadEntity.getAttachmenttitle());
@@ -110,7 +113,7 @@ public class CgUploadController extends BaseController {
 		attributes.put("delurl", "commonController.do?delObjFile&fileKey=" + cgUploadEntity.getId());
 		j.setMsg("操作成功");
 		j.setAttributes(attributes);
-		logger.info("--cgUploadController--saveFiles--上传文件----操作成功-----");
+		log.info("--cgUploadController--saveFiles--上传文件----操作成功-----");
 		return j;
 	}
 	

@@ -17,7 +17,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -69,8 +70,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-
 /**
  * 角色处理类
  * 
@@ -80,11 +79,12 @@ import com.alibaba.fastjson.JSON;
 //@Scope("prototype")
 @Controller
 @RequestMapping("/roleController")
+@Slf4j
 public class RoleController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(RoleController.class);
+	//private static final Logger log = Logger.getLogger(RoleController.class);
 	private UserService userService;
 	private SystemService systemService;
 	@Autowired
@@ -169,7 +169,7 @@ public class RoleController extends BaseController {
 		AjaxJson ajaxJson = new AjaxJson();
 		try {
 			cacheService.clean("sysAuthCache");
-			logger.info("-----清空登录用户权限缓存成功--------[sysAuthCache]-----");
+			log.info("-----清空登录用户权限缓存成功--------[sysAuthCache]-----");
 			ajaxJson.setMsg("重置用户权限成功");
 		} catch (Exception e) {
 			ajaxJson.setMsg("重置用户权限失败");
@@ -205,7 +205,7 @@ public class RoleController extends BaseController {
 			message = "角色: 仍被用户使用，请先删除关联关系";
 		}
 		j.setMsg(message);
-		logger.info(message);
+		log.info(message);
 		return j;
 	}
 
@@ -279,7 +279,7 @@ public class RoleController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_INSERT,
 					Globals.Log_Leavel_INFO);
 		}
-		logger.info(message);
+		log.info(message);
 		return j;
 	}
 
@@ -455,7 +455,7 @@ public class RoleController extends BaseController {
 			}
 			j.setMsg("角色更新成功");
 		} catch (Exception e) {
-			logger.error(ExceptionUtil.getExceptionMessage(e));
+			log.error(ExceptionUtil.getExceptionMessage(e));
 			j.setMsg("角色更新失败");
 		}
 		return j;
@@ -632,7 +632,7 @@ public class RoleController extends BaseController {
 			updateCompare(set, role, map);
 			j.setMsg("权限更新成功");
 		} catch (Exception e) {
-			logger.error(ExceptionUtil.getExceptionMessage(e));
+			log.error(ExceptionUtil.getExceptionMessage(e));
 			j.setMsg("权限更新失败");
 		}
 		return j;
@@ -1094,7 +1094,7 @@ public class RoleController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();

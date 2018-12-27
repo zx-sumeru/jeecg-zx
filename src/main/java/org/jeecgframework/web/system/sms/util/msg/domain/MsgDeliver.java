@@ -4,13 +4,15 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 /**
  * CMPP_DELIVER操作的目的是ISMG把从短信中心或其它ISMG转发来的短信送交SP，SP以CMPP_DELIVER_RESP消息回应.
  */
+@Slf4j
 public class MsgDeliver extends MsgHead {
-	private static Logger logger = Logger.getLogger(MsgDeliver.class);
+	//private static Logger log = Logger.getLogger(MsgDeliver.class);
 	private long msgId;
 	private String destId;// 21 目的号码 String
 	private String serviceId;// 10 业务标识 String
@@ -107,7 +109,7 @@ public class MsgDeliver extends MsgHead {
 			}
 		} else {
 			this.result = 1;// 消息结构错
-			logger.info("短信网关CMPP_DELIVER,解析数据包出错，包长度不一致。长度为:" + data.length);
+			log.info("短信网关CMPP_DELIVER,解析数据包出错，包长度不一致。长度为:" + data.length);
 		}
 	}
 

@@ -18,10 +18,11 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.constant.Globals;
 import org.jeecgframework.core.online.util.FreemarkerHelper;
 import org.jeecgframework.core.util.ApplicationContextUtil;
@@ -59,8 +60,9 @@ import com.google.gson.Gson;
  * @version 1.0
  */
 @SuppressWarnings({"serial","rawtypes","unchecked","static-access"})
+@Slf4j
 public class DataGridTag extends TagSupport {
-	private static Logger log = Logger.getLogger(DataGridTag.class);
+	//private static Logger log = Logger.getLogger(DataGridTag.class);
 	private final String DATE_FORMATTER = "yyyy-MM-dd";
 	private final String DATETIME_FORMATTER = "yyyy-MM-dd hh:mm:ss";
 	

@@ -2,7 +2,8 @@ package org.jeecgframework.web.system.controller.core;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -33,11 +34,12 @@ import org.springframework.web.servlet.ModelAndView;
 //@Scope("prototype")
 @Controller
 @RequestMapping("/noticeAuthorityUserController")
+@Slf4j
 public class NoticeAuthorityUserController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(NoticeAuthorityUserController.class);
+	//private static final Logger log = Logger.getLogger(NoticeAuthorityUserController.class);
 
 	@Autowired
 	private NoticeAuthorityUserServiceI noticeAuthorityUserService;

@@ -8,8 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -49,12 +50,13 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/interfaceController")
+@Slf4j
 public class TSInterfaceController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger.getLogger(TSInterfaceController.class);
+	//private static final Logger log = Logger.getLogger(TSInterfaceController.class);
 	private UserService userService;
 	private SystemService systemService;
 

@@ -24,8 +24,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipFile;
 import org.apache.tools.zip.ZipOutputStream;
@@ -63,9 +64,10 @@ import com.thoughtworks.xstream.converters.basic.NullConverter;
  * @date 2013-09-10  
  * @date 2014-01-25 
  */
+@Slf4j
 @Service("MigrateForm")
 public class MigrateForm<T> {
-	private static final Logger logger = Logger.getLogger(MigrateForm.class);
+	//private static final Logger log = Logger.getLogger(MigrateForm.class);
 	static InputStream inStream = null;
 	private static String insert = "INSERT INTO";// 插入sql
 	private static String values = "VALUES";// values关键字
@@ -408,7 +410,7 @@ public class MigrateForm<T> {
 			try {
 				file.createNewFile();
 			} catch (IOException e) {
-				logger.info("创建文件名失败！！");
+				log.info("创建文件名失败！！");
 				e.printStackTrace();
 			}
 		}

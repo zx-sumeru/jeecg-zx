@@ -10,7 +10,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -61,13 +62,14 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgFormHeadController")
 public class CgFormHeadController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CgFormHeadController.class);
+	//private static final Logger log = Logger.getLogger(CgFormHeadController.class);
 	
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
@@ -181,7 +183,7 @@ public class CgFormHeadController extends BaseController {
 		cgFormFieldService.removeSubTableStr4Main(cgFormHead);
 		systemService.addLog(message, Globals.Log_Type_DEL,
 				Globals.Log_Leavel_INFO);
-		logger.info("["+IpUtil.getIpAddr(request)+"][online表单配置删除]"+message+"表名："+cgFormHead.getTableName());
+		log.info("["+IpUtil.getIpAddr(request)+"][online表单配置删除]"+message+"表名："+cgFormHead.getTableName());
 		j.setMsg(message);
 		return j;
 	}
@@ -203,7 +205,7 @@ public class CgFormHeadController extends BaseController {
 		cgFormFieldService.removeSubTableStr4Main(cgFormHead);
 		systemService.addLog(message, Globals.Log_Type_DEL,
 				Globals.Log_Leavel_INFO);
-		logger.info("["+IpUtil.getIpAddr(request)+"][online表单配置移除]"+message+"表名："+cgFormHead.getTableName());
+		log.info("["+IpUtil.getIpAddr(request)+"][online表单配置移除]"+message+"表名："+cgFormHead.getTableName());
 		j.setMsg(message);
 		return j;
 	}
@@ -248,20 +250,20 @@ public class CgFormHeadController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		cgFormHead = systemService.getEntity(CgFormHeadEntity.class,cgFormHead.getId());
 
-		logger.info("---同步数据库 ---doDbSynch-----> TableName:"+cgFormHead.getTableName()+" ---修改时间 :"+cgFormHead.getUpdateDate()+" ----创建时间:"+cgFormHead.getCreateDate() +"---请求IP ---+"+oConvertUtils.getIpAddrByRequest(request));
+		log.info("---同步数据库 ---doDbSynch-----> TableName:"+cgFormHead.getTableName()+" ---修改时间 :"+cgFormHead.getUpdateDate()+" ----创建时间:"+cgFormHead.getCreateDate() +"---请求IP ---+"+oConvertUtils.getIpAddrByRequest(request));
 		//安全控制，判断不在online管理中表单不允许操作
 		String sql = "select count(*) from cgform_head where table_name = ?";
 		Long i = systemService.getCountForJdbcParam(sql,cgFormHead.getTableName());
 		if(i==0){
 			message = "同步失败，非法无授权访问！";
-			logger.info(message+" ----- 请求IP ---+"+IpUtil.getIpAddr(request));
+			log.info(message+" ----- 请求IP ---+"+IpUtil.getIpAddr(request));
 			j.setMsg(message);
 			return j;
 		}
 		TSUser currentUser = ResourceUtil.getSessionUser();
         if(CgAutoListConstant.SYS_DEV_FLAG_0.equals(currentUser.getDevFlag())){
             message = "同步失败，当前用户未授权开发权限！";
-            logger.info(message+" ----- 请求IP ---+"+IpUtil.getIpAddr(request));
+            log.info(message+" ----- 请求IP ---+"+IpUtil.getIpAddr(request));
             j.setMsg(message);
             return j;
         }
@@ -292,7 +294,7 @@ public class CgFormHeadController extends BaseController {
 				}
 
 				j.setMsg(message);
-				logger.info("["+IpUtil.getIpAddr(request)+"][online表单配置同步数据库]"+message+"表名："+cgFormHead.getTableName());
+				log.info("["+IpUtil.getIpAddr(request)+"][online表单配置同步数据库]"+message+"表名："+cgFormHead.getTableName());
 			}else{
 				message = "同步失败";		
 				j.setMsg(message);
@@ -347,7 +349,7 @@ public class CgFormHeadController extends BaseController {
 			String sql = "select count(*) from tmp_tables where wl_table_name = ?";
 			long i = systemService.getCountForJdbcParam(sql, new String[]{cgFormHead.getTableName()});
 			if(i>0){
-				logger.info("["+IpUtil.getIpAddr(request)+"][系统已经存在，online表名："+cgFormHead.getTableName());
+				log.info("["+IpUtil.getIpAddr(request)+"][系统已经存在，online表名："+cgFormHead.getTableName());
 				j.setMsg("系统中已经存在该表，不允许创建");
 				return j;
 			}
@@ -409,7 +411,7 @@ public class CgFormHeadController extends BaseController {
 			systemService.addLog(message, Globals.Log_Type_INSERT,
 					Globals.Log_Leavel_INFO);
 		}
-		logger.info("["+IpUtil.getIpAddr(request)+"][online表单配置保存]"+message+"表名："+cgFormHead.getTableName());
+		log.info("["+IpUtil.getIpAddr(request)+"][online表单配置保存]"+message+"表名："+cgFormHead.getTableName());
 		j.setMsg(message);
 		return j;
 	}
@@ -955,7 +957,7 @@ public class CgFormHeadController extends BaseController {
 				
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();

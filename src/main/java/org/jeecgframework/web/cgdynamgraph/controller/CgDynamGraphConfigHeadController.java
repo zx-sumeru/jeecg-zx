@@ -4,7 +4,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -38,13 +39,14 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgDynamGraphConfigHeadController.do")
 public class CgDynamGraphConfigHeadController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CgDynamGraphConfigHeadController.class);
+	//private static final Logger log = Logger.getLogger(CgDynamGraphConfigHeadController.class);
 
 	@Autowired
 	private CgDynamGraphConfigHeadServiceI cgDynamGraphConfigHeadService;
@@ -101,7 +103,7 @@ public class CgDynamGraphConfigHeadController extends BaseController {
 		try{
 			cgDynamGraphConfigHeadService.delMain(cgDynamGraphConfigHead);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online移动图表删除]["+cgDynamGraphConfigHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online移动图表删除]["+cgDynamGraphConfigHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "移动图表配置抬头删除失败";
@@ -127,7 +129,7 @@ public class CgDynamGraphConfigHeadController extends BaseController {
 				CgDynamGraphConfigHeadEntity cgDynamGraphConfigHead = systemService.getEntity(CgDynamGraphConfigHeadEntity.class, id);
 				cgDynamGraphConfigHeadService.delMain(cgDynamGraphConfigHead);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-				logger.info("["+IpUtil.getIpAddr(request)+"][online移动图表批量删除]["+cgDynamGraphConfigHead.getCode()+"]"+message);
+				log.info("["+IpUtil.getIpAddr(request)+"][online移动图表批量删除]["+cgDynamGraphConfigHead.getCode()+"]"+message);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -167,7 +169,7 @@ public class CgDynamGraphConfigHeadController extends BaseController {
 			}
 			cgDynamGraphConfigHeadService.addMain(cgDynamGraphConfigHead, cgDynamGraphConfigItemList,cgDynamGraphConfigParamList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online移动图表录入]["+cgDynamGraphConfigHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online移动图表录入]["+cgDynamGraphConfigHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "移动图表配置抬头添加失败";
@@ -205,7 +207,7 @@ public class CgDynamGraphConfigHeadController extends BaseController {
 			}
 			cgDynamGraphConfigHeadService.updateMain(cgDynamGraphConfigHead, cgDynamGraphConfigItemList, cgDynamGraphConfigParamList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online移动图表更新]["+cgDynamGraphConfigHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online移动图表更新]["+cgDynamGraphConfigHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "更新移动图表配置抬头失败";
@@ -261,7 +263,7 @@ public class CgDynamGraphConfigHeadController extends BaseController {
 	    	List<CgDynamGraphConfigItemEntity> cgDynamGraphConfigItemEntityList = systemService.findHql(hql0,id0);
 			req.setAttribute("cgDynamGraphConfigItemList", cgDynamGraphConfigItemEntityList);
 		}catch(Exception e){
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/cgdynamgraph/core/cgDynamGraphConfigItemList");
 	}
@@ -284,7 +286,7 @@ public class CgDynamGraphConfigHeadController extends BaseController {
 	    	List<CgDynamGraphConfigParamEntity> cgDynamGraphConfigParamEntityList = systemService.findHql(hql0,id0);
 			req.setAttribute("cgDynamGraphConfigParamList",cgDynamGraphConfigParamEntityList);
 		}catch(Exception e){
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/cgdynamgraph/core/cgDynamGraphConfigParamList");
 	}

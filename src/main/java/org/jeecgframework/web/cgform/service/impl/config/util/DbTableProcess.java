@@ -12,17 +12,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.boot.Metadata;
 import org.hibernate.internal.SessionImpl;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.tool.schema.TargetType;
 import org.jeecgframework.web.cgform.entity.config.CgFormFieldEntity;
 import org.jeecgframework.web.cgform.entity.config.CgFormHeadEntity;
 import org.jeecgframework.web.cgform.exception.DBException;
 import org.jeecgframework.web.cgform.service.config.DbTableHandleI;
-import org.springframework.orm.hibernate4.SessionFactoryUtils;
+//import org.springframework.orm.hibernate4.SessionFactoryUtils;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -32,8 +36,9 @@ import freemarker.template.TemplateException;
  * 通过hibernate和脚本来处理来同步数据库
  * 对于修改数据库的字段，考虑各种数据库的情况，字段名称全部、类型修改成大写
  */
+@Slf4j
 public class DbTableProcess {
-	private static final Logger logger = Logger.getLogger(DbTableProcess.class);
+	//private static final Logger log = Logger.getLogger(DbTableProcess.class);
 	private static  DbTableHandleI dbTableHandle;
 	
 	
@@ -49,7 +54,7 @@ public class DbTableProcess {
 		t.setNumberFormat("0.#####################");
 		t.process(getRootMap(table,DbTableUtil.getDataType(session)), out);
 		String xml = out.toString();
-		logger.info(xml);
+		log.info(xml);
 		createTable(xml, table, session);
 	}
 	
@@ -141,7 +146,7 @@ public class DbTableProcess {
 		} catch (SQLException e1) {
 			throw new RuntimeException();
 		}
-		logger.info(strings.toString());
+		log.info(strings.toString());
 		return strings;
 	}
 	
@@ -157,9 +162,15 @@ public class DbTableProcess {
 //       .setProperty("hibernate.connection.url",propertiesUtil.readProperty("jdbc.url.jeecg"))
 //       .setProperty("hibernate.connection.driver_class",propertiesUtil.readProperty("jdbc.driver.class")); 
 //       
-			SchemaExport dbExport;
-			dbExport = new SchemaExport(newconf,SessionFactoryUtils.getDataSource(session.getSessionFactory()).getConnection());
-			dbExport.execute(true, true, false, true);
+        SchemaExport dbExport;
+        //dbExport = new SchemaExport(newconf, SessionFactoryUtils.getDataSource(session.getSessionFactory()).getConnection());
+        //dbExport.execute(true, true, false, true);
+
+        // FIXME: 2018/12/27 10:25 待修复
+        dbExport = new SchemaExport();
+        dbExport.execute(null, null, null, null);
+
+
 
 			//抛出执行异常，抛出第一个即可  
 			@SuppressWarnings("unchecked")
@@ -197,7 +208,7 @@ public class DbTableProcess {
 		try {
 			conn = SessionFactoryUtils.getDataSource(session.getSessionFactory()).getConnection();
 		} catch (Exception e) {
-			logger.error(e);
+            log.error("", e);
 			e.printStackTrace();
 		}
 		
@@ -225,7 +236,7 @@ public class DbTableProcess {
 			String columnDef = rs.getString("COLUMN_DEF");
 			String fieldDefault = judgeIsNumber(columnDef)==null?"":judgeIsNumber(columnDef);
 			columnMeta.setFieldDefault(fieldDefault);
-			logger.info("getColumnMetadataFormDataBase --->COLUMN_NAME:"+columnName.toUpperCase()+" TYPE_NAME :"+typeName
+			log.info("getColumnMetadataFormDataBase --->COLUMN_NAME:"+columnName.toUpperCase()+" TYPE_NAME :"+typeName
 					+" DECIMAL_DIGITS:"+decimalDigits+" COLUMN_SIZE:"+columnSize);
 			columnMap.put(columnName, columnMeta);
 			/*columnMeta.setTableName(rs.getString("COLUMN_NAME").toLowerCase());
@@ -236,7 +247,7 @@ public class DbTableProcess {
 			columnMeta.setIsNullable(rs.getInt("NULLABLE")==1?"Y":"N");
 			columnMeta.setComment(rs.getString("REMARKS"));
 			columnMeta.setFieldDefault(judgeIsNumber(rs.getString("COLUMN_DEF"))==null?"":judgeIsNumber(rs.getString("COLUMN_DEF")));
-			logger.info("getColumnMetadataFormDataBase --->COLUMN_NAME:"+rs.getString("COLUMN_NAME")+" TYPE_NAME :"+rs.getString("TYPE_NAME")
+			log.info("getColumnMetadataFormDataBase --->COLUMN_NAME:"+rs.getString("COLUMN_NAME")+" TYPE_NAME :"+rs.getString("TYPE_NAME")
 					+" DECIMAL_DIGITS:"+rs.getInt("DECIMAL_DIGITS")+" COLUMN_SIZE:"+rs.getInt("COLUMN_SIZE"));
 			columnMap.put(rs.getString("COLUMN_NAME").toLowerCase(), columnMeta);*/
 		}
@@ -266,7 +277,7 @@ public class DbTableProcess {
 			columnMeta.setFieldDefault(judgeIsNumber(cgFormFieldEntity.getFieldDefault()));
 			columnMeta.setPkType(table.getJformPkType()==null?"UUID":table.getJformPkType());
 			columnMeta.setOldColumnName(cgFormFieldEntity.getOldFieldName()!=null?cgFormFieldEntity.getOldFieldName().toLowerCase():null);
-			logger.info("getColumnMetadataFormCgForm ---->COLUMN_NAME:"+cgFormFieldEntity.getFieldName().toLowerCase()+" TYPE_NAME:"+cgFormFieldEntity.getType().toLowerCase()
+			log.info("getColumnMetadataFormCgForm ---->COLUMN_NAME:"+cgFormFieldEntity.getFieldName().toLowerCase()+" TYPE_NAME:"+cgFormFieldEntity.getType().toLowerCase()
 					+" DECIMAL_DIGITS:"+cgFormFieldEntity.getPointLength()+" COLUMN_SIZE:"+cgFormFieldEntity.getLength());
 			map.put(cgFormFieldEntity.getFieldName().toLowerCase(), columnMeta);
 			

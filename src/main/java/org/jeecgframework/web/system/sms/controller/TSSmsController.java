@@ -9,10 +9,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -25,14 +26,10 @@ import org.jeecgframework.core.util.ResourceUtil;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.tag.vo.datatable.SortDirection;
-import org.jeecgframework.web.system.pojo.base.TSNotice;
-import org.jeecgframework.web.system.pojo.base.TSNoticeReadUser;
-import org.jeecgframework.web.system.pojo.base.TSUser;
 import org.jeecgframework.web.system.sms.entity.TSSmsEntity;
 import org.jeecgframework.web.system.sms.service.TSSmsServiceI;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,13 +47,14 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/tSSmsController")
 public class TSSmsController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(TSSmsController.class);
+	//private static final Logger log = Logger.getLogger(TSSmsController.class);
 
 	@Autowired
 	private TSSmsServiceI tSSmsService;
@@ -352,7 +350,7 @@ public class TSSmsController extends BaseController {
 //				j.setMsg("文件导入成功！");
 //			} catch (Exception e) {
 //				j.setMsg("文件导入失败！");
-//				logger.error(ExceptionUtil.getExceptionMessage(e));
+//				log.error(ExceptionUtil.getExceptionMessage(e));
 //			}finally{
 //				try {
 //					file.getInputStream().close();
@@ -408,7 +406,7 @@ public class TSSmsController extends BaseController {
 		    }
 		} catch (Exception e) {
 			j.setSuccess(false);
-			logger.info("获取发送信息失败");
+			log.info("获取发送信息失败");
 		}
 		return j;
 	}

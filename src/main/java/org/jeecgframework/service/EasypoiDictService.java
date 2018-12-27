@@ -3,8 +3,10 @@ package org.jeecgframework.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.core.util.StringUtil;
+import org.jeecgframework.easypoi.service.EasypoiDictServiceI;
 import org.jeecgframework.web.system.dao.JeecgDictDao;
 import org.jeecgframework.web.system.pojo.base.DictEntity;
 import org.jeecgframework.web.system.service.MutiLangServiceI;
@@ -17,9 +19,10 @@ import org.springframework.stereotype.Service;
  * @since：2017-4-12 下午05:15:04
  * @version:1.0
  */
+@Slf4j
 @Service("easypoiDictService")
 public class EasypoiDictService implements EasypoiDictServiceI {
-	private Logger log = Logger.getLogger(EasypoiDictService.class);
+	//private Logger log = Logger.getLogger(EasypoiDictService.class);
 	
 	@Autowired
 	private JeecgDictDao jeecgDictDao;

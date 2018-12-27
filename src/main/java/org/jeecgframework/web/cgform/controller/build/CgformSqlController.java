@@ -15,12 +15,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.web.cgform.dao.config.CgFormVersionDao;
 import org.jeecgframework.web.cgform.entity.config.CgFormHeadEntity;
 import org.jeecgframework.web.cgform.pojo.config.CgFormHeadPojo;
 import org.jeecgframework.web.cgform.service.migrate.MigrateForm;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.model.common.DBTable;
 import org.jeecgframework.core.common.model.common.UploadFile;
@@ -35,9 +37,7 @@ import org.jeecgframework.core.util.oConvertUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Controller;
@@ -60,6 +60,7 @@ import com.thoughtworks.xstream.XStream;
  * 
  */
 //@Scope("prototype")
+	@Slf4j
 @Controller
 @RequestMapping("/cgformSqlController")
 public class CgformSqlController extends BaseController {
@@ -67,8 +68,7 @@ public class CgformSqlController extends BaseController {
 	 * Logger for this class
 	 */
 	@SuppressWarnings("unused")
-	private static final Logger logger = Logger
-			.getLogger(CgformSqlController.class);
+	//private static final Logger log = Logger.getLogger(CgformSqlController.class);
 	@Autowired
 	private CgFormVersionDao cgFormVersionDao;
 
@@ -133,7 +133,7 @@ public class CgformSqlController extends BaseController {
 			toClient.flush();
 			toClient.close();
 			fis.close();
-			logger.info("["+IpUtil.getIpAddr(request)+"][online表单配置导出]");
+			log.info("["+IpUtil.getIpAddr(request)+"][online表单配置导出]");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -227,7 +227,7 @@ public class CgformSqlController extends BaseController {
 			LogUtil.error(e1.toString());
 			message = e1.toString();
 		}
-		logger.info("["+IpUtil.getIpAddr(request)+"][online表单配置导入]"+message);
+		log.info("["+IpUtil.getIpAddr(request)+"][online表单配置导入]"+message);
 		if (StringUtil.isNotEmpty(message))
 			j.setMsg("SQL文件导入失败," + message);
 		else

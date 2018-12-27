@@ -1,9 +1,11 @@
 package org.jeecgframework.web.system.controller.core;
 
 import javax.servlet.http.HttpServletRequest;
+
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.web.system.pojo.base.DuplicateCheckPage;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -20,11 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @date 2013-09-12 22:27:30
  * @version V1.0   
  */
+@Slf4j
 @Controller
 @RequestMapping("/duplicateCheckAction")
 public class DuplicateCheckAction extends BaseController {
 
-	private static final Logger logger = Logger.getLogger(DuplicateCheckAction.class);
+	//private static final Logger log = Logger.getLogger(DuplicateCheckAction.class);
 
 	@Autowired
 	//SQL 使用JdbcDao

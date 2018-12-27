@@ -2,7 +2,8 @@ package org.jeecgframework.web.system.controller.core;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author zhoujf
  * 
  */
+@Slf4j
 @Controller
 @RequestMapping("/")
 public class SSOController extends BaseController{
-	private Logger log = Logger.getLogger(SSOController.class);
+	//private Logger log = Logger.getLogger(SSOController.class);
 	
 	
 	@RequestMapping(value = "toLogin")

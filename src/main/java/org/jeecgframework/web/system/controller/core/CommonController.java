@@ -8,7 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.common.UploadFile;
@@ -44,13 +45,14 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/commonController")
 public class CommonController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CommonController.class);
+	//private static final Logger log = Logger.getLogger(CommonController.class);
 	private SystemService systemService;
 	@Autowired
 	private TSDictTableConfigServiceI tSDictTableConfigService;
@@ -66,7 +68,7 @@ public class CommonController extends BaseController {
 	@RequestMapping(params = "listTurn")
 	public ModelAndView listTurn(HttpServletRequest request) {
 		String turn = request.getParameter("turn");// 跳转的目标页面
-		logger.info("--通用页面跳转--listTurn-------"+turn);
+		log.info("--通用页面跳转--listTurn-------"+turn);
 		return new ModelAndView(turn);
 	}
 
@@ -129,7 +131,7 @@ public class CommonController extends BaseController {
 			//uploadFile.setContent(content);
 			//uploadFile.setView(true);
 			systemService.viewOrDownloadFile(uploadFile);
-			logger.info("--附件预览----TSAttachment---viewFile-----path--"+path);
+			log.info("--附件预览----TSAttachment---viewFile-----path--"+path);
 		}else{
 			subclassname = oConvertUtils.getString(subclassname);
 			Class<?> fileClass = MyClassLoader.getClassByScn(subclassname);// 自定义附件实体类
@@ -147,7 +149,7 @@ public class CommonController extends BaseController {
 			uploadFile.setContent(content);
 			//uploadFile.setView(true);
 			systemService.viewOrDownloadFile(uploadFile);
-			logger.info("--附件预览---自定义实体类："+subclassname+"--viewFile-----path--"+path);
+			log.info("--附件预览---自定义实体类："+subclassname+"--viewFile-----path--"+path);
 		}
 
 	}
@@ -270,7 +272,7 @@ public class CommonController extends BaseController {
 		message = "" + attachment.getAttachmenttitle() + "删除成功";
 		systemService.delete(objfile);
 		systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-		logger.info("--删除附件---delObjFile----"+message);
+		log.info("--删除附件---delObjFile----"+message);
 		
 		j.setMsg(message);
 		return j;

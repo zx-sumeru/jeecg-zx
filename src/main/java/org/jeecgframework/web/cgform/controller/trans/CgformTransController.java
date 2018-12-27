@@ -14,10 +14,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.codegenerate.database.JeecgReadTable;
 import org.jeecgframework.codegenerate.pojo.Columnt;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -42,10 +43,11 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Alexander
  * @date 20130927
  */
+@Slf4j
 @Controller
 @RequestMapping("/cgformTransController")
 public class CgformTransController {
-	private static final Logger logger = Logger.getLogger(CgformTransController.class);
+	//private static final Logger log = Logger.getLogger(CgformTransController.class);
 	private static String GENERATE_FORM_IDS;
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
@@ -131,13 +133,13 @@ public class CgformTransController {
 					no += ids[i];
 					continue;
 				}
-				logger.info("["+IpUtil.getIpAddr(request)+"] [online数据库导入表] "+"  --表名："+ids[i]);
+				log.info("["+IpUtil.getIpAddr(request)+"] [online数据库导入表] "+"  --表名："+ids[i]);
 				List<Columnt> list;
 				try {
 					list = new JeecgReadTable().readOriginalTableColumn(ids[i]);
 				} catch (Exception e) {
 					e.printStackTrace();
-					logger.info("表名换换为小写");
+					log.info("表名换换为小写");
                     list = new JeecgReadTable().readOriginalTableColumn(ids[i].toLowerCase());
 				}
 				CgFormHeadEntity cgFormHead = new CgFormHeadEntity();
@@ -153,7 +155,7 @@ public class CgformTransController {
 				List<CgFormFieldEntity> columnsList = new ArrayList<CgFormFieldEntity>();
 				for (int k = 0; k < list.size(); k++) {
 					Columnt columnt = list.get(k);
-					logger.info("  columnt : "+ columnt.toString());
+					log.info("  columnt : "+ columnt.toString());
 					String fieldName = columnt.getFieldDbName();
 					CgFormFieldEntity cgFormField = new CgFormFieldEntity();
 

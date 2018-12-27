@@ -450,8 +450,7 @@ public class FormUtil {
 		TreeMap<Integer, Float> SumValueDic = new TreeMap<Integer, Float>();
 		for (int row = 0; row < rowCount; row++) {
 
-			JSONArray rowValue = (dataValue != null && dataValue
-					.has(name + row)) ? dataValue.getJSONArray(name + row)
+			JSONArray rowValue = (dataValue != null && dataValue.has(name + row)) ? dataValue.getJSONArray(name + row)
 					: null;
 
 			String tr = "";// 默认一行

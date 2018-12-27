@@ -1,5 +1,7 @@
 package org.jeecgframework.core.util;
 
+import org.jeecgframework.web.system.pojo.base.DynamicDataSourceEntity;
+
 import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Map;

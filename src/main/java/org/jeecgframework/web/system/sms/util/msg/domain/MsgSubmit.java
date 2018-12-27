@@ -4,7 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 import org.jeecgframework.web.system.sms.util.msg.util.MsgUtils;
 
@@ -20,8 +21,9 @@ import org.jeecgframework.web.system.sms.util.msg.util.MsgUtils;
  *                日期： 2013-4-24 下午2:22:28 <br />
  *                CopyRight © 2012 chinaMobile.ahcmcc
  */
+@Slf4j
 public class MsgSubmit extends MsgHead {
-	private static Logger logger = Logger.getLogger(MsgSubmit.class);
+	//private static Logger log = Logger.getLogger(MsgSubmit.class);
 	private long msgId = 0;
 	private byte pkTotal = 0x01;
 	private byte pkNumber = 0x01;
@@ -101,7 +103,7 @@ public class MsgSubmit extends MsgHead {
 			MsgUtils.writeString(dous, this.linkID, 20);// 点播业务使用的LinkID
 			dous.close();
 		} catch (IOException e) {
-			logger.error("封装短信发送二进制数组失败。");
+			log.error("封装短信发送二进制数组失败。");
 		}
 		return bous.toByteArray();
 	}

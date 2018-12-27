@@ -11,7 +11,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -24,6 +25,7 @@ import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.PasswordUtil;
 import org.jeecgframework.core.util.StringUtil;
 import org.jeecgframework.tag.core.easyui.TagUtil;
+import org.jeecgframework.web.system.pojo.base.DynamicDataSourceEntity;
 import org.jeecgframework.web.system.service.DynamicDataSourceServiceI;
 import org.jeecgframework.web.system.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +43,14 @@ import org.springframework.web.servlet.ModelAndView;
  * @version V1.0
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("/dynamicDataSourceController")
 public class DynamicDataSourceController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(DynamicDataSourceController.class);
+	//private static final Logger log = Logger.getLogger(DynamicDataSourceController.class);
 
 	@Autowired
 	private DynamicDataSourceServiceI dynamicDataSourceService;
@@ -84,7 +87,7 @@ public class DynamicDataSourceController extends BaseController {
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(DynamicDataSourceEntity dbSource,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+	public void datagrid(DynamicDataSourceEntity dbSource, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(DynamicDataSourceEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, dbSource, request.getParameterMap());
@@ -238,11 +241,11 @@ public class DynamicDataSourceController extends BaseController {
 			}
 		} catch (ClassNotFoundException e) {
 			//e.printStackTrace();
-			logger.error(e.toString());
+			log.error(e.toString());
 			map.put("msg", "数据库连接失败!!");
 		} catch (SQLException e) {
 			//e.printStackTrace();
-			logger.error(e.toString());
+			log.error(e.toString());
 			map.put("msg", "数据库连接失败!!");
 		}finally{
 			try {
@@ -251,7 +254,7 @@ public class DynamicDataSourceController extends BaseController {
 				}
 			} catch (SQLException e) {
 				//e.printStackTrace();
-				logger.error(e.toString());
+				log.error(e.toString());
 			}
 		}
     	j.setObj(map);

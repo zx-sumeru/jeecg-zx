@@ -16,8 +16,9 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.common.model.json.AjaxJson;
@@ -65,11 +66,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @version V1.0   
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("/departAuthGroupController")
 public class DepartAuthGroupController extends BaseController {
 	
-	private static final Logger logger = Logger.getLogger(DepartAuthGroupController.class);
+	//private static final Logger logger = Logger.getLogger(DepartAuthGroupController.class);
 	
 	@Autowired
 	private SystemService systemService;
@@ -870,7 +872,7 @@ public class DepartAuthGroupController extends BaseController {
 			updateCompare(set, functionGroup, map);
 			j.setMsg("权限更新成功");
 		} catch (Exception e) {
-			logger.error(ExceptionUtil.getExceptionMessage(e));
+			log.error(ExceptionUtil.getExceptionMessage(e));
 			j.setMsg("权限更新失败");
 		}
 		return j;
@@ -1469,7 +1471,7 @@ public class DepartAuthGroupController extends BaseController {
 			updateRoleCompare(set, role, map);
 			j.setMsg("权限更新成功");
 		} catch (Exception e) {
-			logger.error(ExceptionUtil.getExceptionMessage(e));
+			log.error(ExceptionUtil.getExceptionMessage(e));
 			j.setMsg("权限更新失败");
 		}
 		return j;

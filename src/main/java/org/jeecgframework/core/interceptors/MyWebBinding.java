@@ -8,6 +8,11 @@ import java.util.Date;
 
 public class MyWebBinding implements WebBindingInitializer {
 
+	@Override
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(Date.class, new DateConvertEditor());
+	}
+
 	public void initBinder(WebDataBinder binder, WebRequest request) {
 		// 1. 使用spring自带的CustomDateEditor
 		// SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

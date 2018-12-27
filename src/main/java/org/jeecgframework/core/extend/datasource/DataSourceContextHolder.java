@@ -5,7 +5,7 @@ package org.jeecgframework.core.extend.datasource;
  */
 public class DataSourceContextHolder {
 
-	private static final ThreadLocal contextHolder=new ThreadLocal();
+	private static final ThreadLocal<DataSourceType> contextHolder=new ThreadLocal();
 	
 	public static void setDataSourceType(DataSourceType dataSourceType){
 		contextHolder.set(dataSourceType);

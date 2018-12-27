@@ -8,8 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.constant.DataBaseConstant;
 import org.jeecgframework.core.util.ApplicationContextUtil;
@@ -47,12 +48,13 @@ import org.springframework.transaction.annotation.Transactional;
  * @Description: (表单模板数据操作service)
  * @author zhoujunfeng
  */
+@Slf4j
 @Service("dataBaseService")
 //--author：luobaoli---------date:20150616--------for: 修改spring事务回滚异常设置，以便支持BusinessException
 @Transactional(rollbackFor=Exception.class)
 //--author：luobaoli---------date:20150616--------for: 修改spring事务回滚异常设置，以便支持BusinessException
 public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseService{
-	private static final Logger logger = Logger.getLogger(DataBaseServiceImpl.class);
+	//private static final Logger log = Logger.getLogger(DataBaseServiceImpl.class);
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
 	@Autowired
@@ -298,17 +300,17 @@ public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseSe
 			if(StringUtils.isNotEmpty(sqlPlugin)){
 
 				boolean isMiniDao = false;
-				logger.debug("sql plugin -------->"+sqlPlugin);						
+				log.debug("sql plugin -------->"+sqlPlugin);
 				String sqlPluginTemp = formateSQl(sqlPlugin,  data);
-				logger.debug("sql formate plugin -------->"+sqlPluginTemp);
+				log.debug("sql formate plugin -------->"+sqlPluginTemp);
 				try{
 					//注入系统环境变量（支持占位符用法）
 					data = minidaoReplaceExtendSqlSysVar(data);
 					sqlPlugin = FreemarkerParseFactory.parseTemplateContent(sqlPluginTemp, data);
 					isMiniDao = true;
 				}catch(Exception e){
-					logger.debug(e.getMessage());
-					logger.debug("minidao转换不成功，使用正常sql处理");
+					log.debug(e.getMessage());
+					log.debug("minidao转换不成功，使用正常sql处理");
 					sqlPlugin = sqlPluginTemp;
 				}
 
@@ -340,9 +342,9 @@ public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseSe
 						}
 
 						if(num>0){
-							logger.debug("sql plugin --execute success------>"+sql);
+							log.debug("sql plugin --execute success------>"+sql);
 						}else{
-							logger.debug("sql plugin --execute fail------>"+sql);
+							log.debug("sql plugin --execute fail------>"+sql);
 						}
 					}
 				}
@@ -544,14 +546,14 @@ public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseSe
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					log.error("服务异常",e);
 				}
 			}else if(StringUtil.isNotEmpty(dbType)&&"postgres".equalsIgnoreCase(dbType)){
 				PostgreSQLSequenceMaxValueIncrementer incr = new PostgreSQLSequenceMaxValueIncrementer(dataSource, "HIBERNATE_SEQUENCE");
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					log.error("错误",e);
 				}
 			}else{
 				pkValue = null;
@@ -562,14 +564,14 @@ public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseSe
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					log.error("错误",e);
 				}
 			}else if(StringUtil.isNotEmpty(dbType)&&"postgres".equalsIgnoreCase(dbType)){
 				PostgreSQLSequenceMaxValueIncrementer incr = new PostgreSQLSequenceMaxValueIncrementer(dataSource, pkSequence);
 				try{
 					pkValue = incr.nextLongValue();
 				}catch (Exception e) {
-					logger.error(e,e);
+					log.error("服务异常",e);
 				}
 			}else{
 				pkValue = null;
@@ -753,7 +755,7 @@ public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseSe
 
 					}
 //				} catch (Exception e) {
-//					logger.error(e.getMessage());
+//					log.error(e.getMessage());
 //					e.printStackTrace();
 //					throw new BusinessException("执行JAVA增强出现异常！");
 //				} 
@@ -824,7 +826,7 @@ public class DataBaseServiceImpl extends CommonServiceImpl implements DataBaseSe
 
 					}
 //				} catch (Exception e) {
-//					logger.error(e.getMessage());
+//					log.error(e.getMessage());
 //					e.printStackTrace();
 //					throw new BusinessException("执行JAVA增强出现异常！");
 //				} 

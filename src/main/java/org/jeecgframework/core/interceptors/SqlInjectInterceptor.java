@@ -1,7 +1,8 @@
 package org.jeecgframework.core.interceptors;
 
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.model.json.AjaxJson;
 import org.jeecgframework.core.util.IpUtil;
 import org.jeecgframework.core.util.JSONHelper;
@@ -22,8 +23,9 @@ import java.util.List;
  * @author scott
  * @time 2018-05-21
  */
+@Slf4j
 public class SqlInjectInterceptor implements HandlerInterceptor {
-	private static final Logger logger = Logger.getLogger(SqlInjectInterceptor.class);
+	//private static final Logger log = Logger.getLogger(SqlInjectInterceptor.class);
 	
 	/**
 	 * 在线开发特殊URL(需要录入SQL片段)，进行特殊处理
@@ -52,7 +54,7 @@ public class SqlInjectInterceptor implements HandlerInterceptor {
     	if (onlineOptUrls.contains(requestPath)) {
     		TSUser currentUser = ResourceUtil.getSessionUser();
             if(CgAutoListConstant.SYS_DEV_FLAG_0.equals(currentUser.getDevFlag())){
-                logger.info(" ---操作失败，当前用户未授权开发权限-------- 请求IP ---------+"+ IpUtil.getIpAddr(request));
+                log.info(" ---操作失败，当前用户未授权开发权限-------- 请求IP ---------+"+ IpUtil.getIpAddr(request));
                 
                 AjaxJson json = new AjaxJson();
         		json.setSuccess(false);
@@ -72,7 +74,7 @@ public class SqlInjectInterceptor implements HandlerInterceptor {
             for(String value: values){
                 //sql注入直接拦截
                 if(judgeSQLInject(value.toLowerCase())){
-                	logger.info("-----------Sql注入拦截-----------name: "+name+" -------------value:"+ value);
+                	log.info("-----------Sql注入拦截-----------name: "+name+" -------------value:"+ value);
                     response.setContentType("text/html;charset=UTF-8");  
                     response.getWriter().print("参数含有非法攻击字符,已禁止继续访问！");  
                     return false;  
@@ -110,7 +112,7 @@ public class SqlInjectInterceptor implements HandlerInterceptor {
      * @return
      */
     private String clearXss(String value) {
-    	logger.debug("----before--------处理跨站xss字符转义----------"+ value);
+    	log.debug("----before--------处理跨站xss字符转义----------"+ value);
         if (value == null || "".equals(value)) {
             return value;
         }
@@ -124,7 +126,7 @@ public class SqlInjectInterceptor implements HandlerInterceptor {
         
         //为了用户密码安全，禁止列表查询展示用户密码----------
         value = value.replace(",password","").replace("password","");
-        logger.debug("----end--------处理跨站xss字符转义----------"+ value);
+        log.debug("----end--------处理跨站xss字符转义----------"+ value);
         return value;
     }
 

@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Validator;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -65,11 +66,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Api(value = "Interrole", description = "t_s_interrole", tags = "interroleController")
 @Controller
 @RequestMapping("/interroleController")
+@Slf4j
 public class InterroleController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(InterroleController.class);
+	//private static final Logger log = Logger.getLogger(InterroleController.class);
 
 	@Autowired
 	private InterroleServiceI interroleService;
@@ -150,7 +152,7 @@ public class InterroleController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.info(message);
+		log.info(message);
 		return j;
 	}
 
@@ -219,7 +221,7 @@ public class InterroleController extends BaseController {
 		}
 
 		j.setMsg(message);
-		logger.info(message);
+		log.info(message);
 		return j;
 	}
 
@@ -447,7 +449,7 @@ public class InterroleController extends BaseController {
 			updateCompare(set, role, map);
 			j.setMsg("权限更新成功");
 		} catch (Exception e) {
-			logger.error(ExceptionUtil.getExceptionMessage(e));
+			log.error(ExceptionUtil.getExceptionMessage(e));
 			j.setMsg("权限更新失败");
 		}
 		return j;

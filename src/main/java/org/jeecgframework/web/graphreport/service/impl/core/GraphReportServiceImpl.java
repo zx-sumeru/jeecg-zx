@@ -9,7 +9,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
@@ -21,11 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service(value="graphReportService")
 @Transactional
 public class GraphReportServiceImpl extends CommonServiceImpl implements
 		GraphReportServiceI {
-	private Logger log = Logger.getLogger(GraphReportServiceImpl.class);
+	//private Logger log = Logger.getLogger(GraphReportServiceImpl.class);
 	@Autowired
 	private JdbcDao jdbcDao;
 

@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.beanvalidator.BeanValidators;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
@@ -66,11 +67,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 //@Api(value="TSCompanyPosition",description="职务管理",tags="tSCompanyPositionController")
 @Controller
 @RequestMapping("/tSCompanyPositionController")
+@Slf4j
 public class TSCompanyPositionController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(TSCompanyPositionController.class);
+	//private static final Logger log = Logger.getLogger(TSCompanyPositionController.class);
 
 	@Autowired
 	private TSCompanyPositionServiceI tSCompanyPositionService;
@@ -317,7 +319,7 @@ public class TSCompanyPositionController extends BaseController {
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
 				j.setMsg("文件导入失败！");
-				logger.error(ExceptionUtil.getExceptionMessage(e));
+				log.error(ExceptionUtil.getExceptionMessage(e));
 			}finally{
 				try {
 					file.getInputStream().close();
@@ -421,7 +423,7 @@ public class TSCompanyPositionController extends BaseController {
 			String level = request.getParameter("level");
 			String departid = request.getParameter("departid");
 			String userId = request.getParameter("userId");
-			logger.info("------id----"+id+"----name----"+name+"----level-----"+level+"---departid---"+departid+"----userId---"+userId);
+			log.info("------id----"+id+"----name----"+name+"----level-----"+level+"---departid---"+departid+"----userId---"+userId);
 		    //查找直接上级公司
 			String companyId = getCompanyId(departid);
 			if(StringUtils.isEmpty(companyId)){

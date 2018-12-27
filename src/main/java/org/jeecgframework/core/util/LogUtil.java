@@ -1,13 +1,18 @@
 package org.jeecgframework.core.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
+
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
+//import org.apache.log4j.Level;
+//import org.apache.log4j.LogManager;
+//import org.apache.log4j.Logger;
+//import org.apache.log4j.Priority;
 
 /**
  * 
@@ -23,7 +28,7 @@ public class LogUtil {
   private static Logger getLogger() {
     if(objLog==null){
 //      DOMConfigurator.configure(getConfigFile());
-      objLog = LogManager.getLogger(LogUtil.class);
+      objLog = LoggerFactory.getLogger(LogUtil.class);
     }
     return objLog;
   }
@@ -225,7 +230,29 @@ public class LogUtil {
       sb.append(']');
       sb.append(" - ");
       sb.append(msg);
-      getLogger().log((Priority) Level.toLevel(level), sb.toString(), e);
+      //Level.
+      //  getLogger().log((Priority) Level.toLevel(level), sb.toString(), e);
+        Level level1 = Level.valueOf(level);
+        switch (level1) {
+            case ERROR:
+                getLogger().error(sb.toString(), e);
+                break;
+            case WARN:
+                getLogger().warn(sb.toString(), e);
+                break;
+            case INFO:
+                getLogger().info(sb.toString(), e);
+                break;
+            case DEBUG:
+                getLogger().debug(sb.toString(), e);
+                break;
+            case TRACE:
+                getLogger().trace(sb.toString(), e);
+                break;
+            default:
+                getLogger().info(sb.toString(), e);
+                break;
+        }
     }catch(Exception ex){
       ex.printStackTrace();
     }finally{

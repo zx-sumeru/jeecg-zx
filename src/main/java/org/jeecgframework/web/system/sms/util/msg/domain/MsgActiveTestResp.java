@@ -4,7 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 /**
  * 测试激活响应类.
@@ -16,8 +17,9 @@ import org.apache.log4j.Logger;
  *         日期： 2013-4-24 下午2:21:00 <br />
  *         CopyRight © 2012 chinaMobile.ahcmcc
  */
+@Slf4j
 public class MsgActiveTestResp extends MsgHead {
-	private static Logger logger = Logger.getLogger(MsgActiveTestResp.class);
+	//private static Logger log = Logger.getLogger(MsgActiveTestResp.class);
 	private byte reserved;//
 
 	/**
@@ -41,7 +43,7 @@ public class MsgActiveTestResp extends MsgHead {
 				e.printStackTrace();
 			}
 		} else {
-			logger.info("链路检查,解析数据包出错，包长度不一致。长度为:" + data.length);
+			log.info("链路检查,解析数据包出错，包长度不一致。长度为:" + data.length);
 		}
 	}
 

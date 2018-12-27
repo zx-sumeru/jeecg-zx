@@ -3,7 +3,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.jeecgframework.codegenerate.util.CodeResourceUtil;
 import org.jeecgframework.codegenerate.util.def.ConvertDef;
@@ -14,10 +15,11 @@ import org.jeecgframework.web.cgform.service.config.CgFormIndexServiceI;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service("cgFormIndexService")
 @Transactional
 public class CgFormIndexServiceImpl extends CommonServiceImpl implements CgFormIndexServiceI {
-	private static final Logger logger = Logger.getLogger(CgFormIndexServiceImpl.class);
+	//private static final Logger log = Logger.getLogger(CgFormIndexServiceImpl.class);
 	
  	public <T> void delete(T entity) {
  		super.delete(entity);
@@ -126,7 +128,7 @@ public class CgFormIndexServiceImpl extends CommonServiceImpl implements CgFormI
 				}
 			} catch (HibernateException e) {
 				//e.printStackTrace();
-				logger.error(e.toString());
+				log.error(e.toString());
 			}
 			
 			//删除索引后重新保存 【物理表】

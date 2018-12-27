@@ -4,7 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 
 /**
  * . ISMG以CMPP_CONNECT_RESP消息响应SP的链接请求。<br/>
@@ -15,8 +16,9 @@ import org.apache.log4j.Logger;
  * 认证出错时，此项为空。<br/>
  * version服务器支持的最高版本号，对于3.0的版本，高4bit为3，低4位为0<br/>
  */
+@Slf4j
 public class MsgConnectResp extends MsgHead {
-	private static Logger logger = Logger.getLogger(MsgConnectResp.class);
+	//private static Logger log = Logger.getLogger(MsgConnectResp.class);
 	private int status;// 响应状态状态 0：正确 1：消息结构错 2：非法源地址 3：认证错 4：版本太高 5~ ：其他错误
 	private String statusStr;// 响应状态状态 0：正确 1：消息结构错 2：非法源地址 3：认证错 4：版本太高 5~
 								// ：其他错误
@@ -53,7 +55,7 @@ public class MsgConnectResp extends MsgHead {
 				e.printStackTrace();
 			}
 		} else {
-			logger.info("链接至IMSP,解析数据包出错，包长度不一致。长度为:" + data.length);
+			log.info("链接至IMSP,解析数据包出错，包长度不一致。长度为:" + data.length);
 		}
 	}
 

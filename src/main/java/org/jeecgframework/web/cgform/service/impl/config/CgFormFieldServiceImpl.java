@@ -12,8 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.annotation.Ehcache;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 import org.jeecgframework.core.constant.Globals;
@@ -40,10 +41,12 @@ import org.jeecgframework.web.cgform.service.impl.config.util.ExtendJsonConvert;
 import org.jeecgframework.web.cgform.util.PublicUtil;
 import org.jeecgframework.web.system.pojo.base.TSOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.SessionFactoryUtils;
+//import org.springframework.orm.hibernate4.SessionFactoryUtils;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service("cgFormFieldService")
 @Transactional
 public class CgFormFieldServiceImpl extends CommonServiceImpl implements
@@ -51,8 +54,7 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger
-			.getLogger(CgFormFieldServiceImpl.class);
+	//private static final Logger log = Logger.getLogger(CgFormFieldServiceImpl.class);
 	//同步方式：普通同步
 	private static final String SYN_NORMAL = "normal";
 	//同步方式：强制同步
@@ -92,7 +94,7 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 					MyBeanUtils.copyBeanNotNull2Bean(column, c);
 				} catch (Exception e) {
 					e.printStackTrace();
-					logger.error(e);
+                    log.error("", e);
 				}
 				this.saveOrUpdate(c);
 			}
@@ -234,7 +236,7 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 					try {
 						DbTableProcess.createOrDropTable(cgFormHead, getSession());
 					} catch (Exception e) {
-						logger.error(e.getMessage(),e);
+						log.error(e.getMessage(),e);
 						throw new BusinessException("同步失败:创建新表出错");
 					}
 				}
@@ -249,22 +251,22 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 						this.executeSql(sql);
 					}catch (Exception e) {
 						//部分数据库在没有表而执行删表语句时会报错
-						logger.error(e.getMessage());
+						log.error(e.getMessage());
 					}
 					DbTableProcess.createOrDropTable(cgFormHead, getSession());
 					cgFormIndexService.createIndexes(cgFormHead);
 					cgFormHead.setIsDbSynch("Y");
 					this.saveOrUpdate(cgFormHead);
 				} catch (Exception e) {
-					logger.error(e.getMessage(),e);
+					log.error(e.getMessage(),e);
 					throw new BusinessException("同步失败:创建新表出错");
 				}
 			}
 		}catch (BusinessException e) {
-			logger.error(e.getMessage(),e);
+			log.error(e.getMessage(),e);
 			throw new BusinessException(e.getMessage());
 		}catch (Exception e) {
-			logger.error(e.getMessage(),e);
+			log.error(e.getMessage(),e);
 			throw new BusinessException("同步失败:数据库不支持本次修改,如果不需要保留数据,请尝试强制同步");
 		}
 		return true;
@@ -440,7 +442,7 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 					subTableStr=thisSubTable;
 				}
 				mainE.setSubTableStr(subTableStr);
-				logger.info("--主表" + mainE.getTableName() + "的附表串："
+				log.info("--主表" + mainE.getTableName() + "的附表串："
 						+ mainE.getSubTableStr());
 				// step.7 更新主表的表配置
 				this.updateTable(mainE, "sign",false);
@@ -493,7 +495,7 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 					}
 
 					mainE.setSubTableStr(subTableStr);
-					logger.info("--主表" + mainE.getTableName() + "的附表串："
+					log.info("--主表" + mainE.getTableName() + "的附表串："
 							+ mainE.getSubTableStr());
 					// step.7 更新主表的表配置,不用更新,因为hibernate是读取的缓存,所以和那边操作的对象是一个的
 					//this.updateTable(mainE, null);
@@ -749,7 +751,7 @@ public class CgFormFieldServiceImpl extends CommonServiceImpl implements
 			cgFormVersionDao.updateVersion(String.valueOf(newV + ""), formId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.debug(e.getMessage());
+			log.debug(e.getMessage());
 			return false;
 		}
 		return true;

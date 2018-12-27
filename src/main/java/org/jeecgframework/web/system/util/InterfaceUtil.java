@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
 import org.jeecgframework.core.extend.hqlsearch.parse.ObjectParseUtil;
 import org.jeecgframework.core.extend.hqlsearch.parse.vo.HqlRuleEnum;
@@ -16,8 +17,9 @@ import org.jeecgframework.web.system.pojo.base.InterfaceRuleDto;
 import org.jeecgframework.web.system.pojo.base.TSInterfaceDdataRuleEntity;
 import org.jeecgframework.web.system.service.TSInterfaceServiceI;
 
+@Slf4j
 public class InterfaceUtil {
-	private static final Logger logger = Logger.getLogger(InterfaceUtil.class);
+	//private static final Logger log = Logger.getLogger(InterfaceUtil.class);
 	/**
 	 * 获取接口权限
 	 * @param request
@@ -27,12 +29,12 @@ public class InterfaceUtil {
 	public static InterfaceRuleDto getInterfaceRuleDto(HttpServletRequest request,InterfaceEnum interfaceEnum){
 		//获取用户id
 		String userName = (String) request.getAttribute(JwtConstants.CURRENT_USER_NAME);//= "interfaceuser";//
-		logger.info(interfaceEnum.toString()+"--------"+userName);
+		log.info(interfaceEnum.toString()+"--------"+userName);
 		//根据用户账号和接口编码查询用户的接口权限
 		TSInterfaceServiceI interfaceService=ApplicationContextUtil.getContext().getBean(TSInterfaceServiceI.class);
 		InterfaceRuleDto interfaceRuleDto = interfaceService.getInterfaceRuleByUserNameAndCode(userName,interfaceEnum);
 		System.out.println(interfaceRuleDto);
-		logger.info(interfaceEnum.toString()+"--------"+interfaceRuleDto);
+		log.info(interfaceEnum.toString()+"--------"+interfaceRuleDto);
 		return interfaceRuleDto;
 	}
 	
@@ -52,7 +54,7 @@ public class InterfaceUtil {
 				for(TSInterfaceDdataRuleEntity rule:interfaceDataRule){
 					addRuleToQL(sb,rule);
 				}
-				logger.info(interfaceEnum.toString()+"----getQL----"+sb.toString());
+				log.info(interfaceEnum.toString()+"----getQL----"+sb.toString());
 				return sb.toString();
 			}
 			
@@ -76,7 +78,7 @@ public class InterfaceUtil {
 					addRuleToCriteria(cq,rule);
 					cq.getCriterionList();
 				}
-				logger.info(interfaceEnum.toString()+"----installCriteriaQuery----"+cq.getCriterionList());
+				log.info(interfaceEnum.toString()+"----installCriteriaQuery----"+cq.getCriterionList());
 			}
 		}
 	}

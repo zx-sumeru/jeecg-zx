@@ -24,10 +24,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.dao.jdbc.JdbcDao;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -95,10 +96,11 @@ import com.alibaba.fastjson.JSONObject;
  * @author 张代浩
  *
  */
+@Slf4j
 @Controller
 @RequestMapping("/systemController")
 public class SystemController extends BaseController {
-	private static final Logger logger = Logger.getLogger(SystemController.class);
+	//private static final Logger log = Logger.getLogger(SystemController.class);
 	private UserService userService;
 	private SystemService systemService;
 	private MutiLangServiceI mutiLangService;
@@ -174,7 +176,7 @@ public class SystemController extends BaseController {
 			}
 			ajaxJson.setObj(typeArray);
 		} catch (Exception e) {
-			logger.debug(e.getMessage());
+			log.debug(e.getMessage());
 			ajaxJson.setSuccess(false);
 			ajaxJson.setMsg(e.getMessage());
 		}
@@ -1365,12 +1367,12 @@ public class SystemController extends BaseController {
 	        }
         } catch (IOException e) {
 			j.setSuccess(false);
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}catch (BusinessException b) {
 			j.setSuccess(false);
-			logger.info(b.getMessage());
+			log.info(b.getMessage());
 		}
-    	logger.info("-----systemController/filedeal.do------------"+msg);
+    	log.info("-----systemController/filedeal.do------------"+msg);
 		j.setMsg(msg);
         return j;
     }
@@ -1411,9 +1413,9 @@ public class SystemController extends BaseController {
 			ftp.logout();
 			success=true;
 		} catch (SocketException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (IOException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}finally{
 			if(ftp.isConnected()){
 				try {
@@ -1453,9 +1455,9 @@ public class SystemController extends BaseController {
 			ftp.logout();
 			success=true;
 		} catch (SocketException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (IOException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}finally{
 			if(ftp.isConnected()){
 				try {
@@ -1498,7 +1500,7 @@ public class SystemController extends BaseController {
 			downFtpFile(dbpath, outputStream);
 			response.flushBuffer();
 		} catch (Exception e) {
-			logger.info("--通过流的方式获取文件异常--"+e.getMessage());
+			log.info("--通过流的方式获取文件异常--"+e.getMessage());
 		}finally{
 			if(outputStream!=null){
 				outputStream.close();
@@ -1538,9 +1540,9 @@ public class SystemController extends BaseController {
 			ftp.logout();
 			success=true;
 		} catch (SocketException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		} catch (IOException e) {
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}finally{
 			if(ftp.isConnected()){
 				try {
@@ -1572,16 +1574,16 @@ public class SystemController extends BaseController {
 		String globalSwfTransformFlag = ResourceUtil.getConfigByName("swf.transform.flag");
 
 		
-        logger.debug("----ctxPath-----"+ctxPath);
+        log.debug("----ctxPath-----"+ctxPath);
         try {
 	        //如果是上传操作
 	        if("1".equals(upFlag)){
 	        	String fileName = null;
 	        	String bizType=request.getParameter("bizType");//上传业务名称
-	        	logger.debug("---bizType----"+bizType);
+	        	log.debug("---bizType----"+bizType);
 	        	String bizPath=StoreUploadFilePathEnum.getPath(bizType);//根据业务名称判断上传路径
 	        	String nowday=new SimpleDateFormat("yyyyMMdd").format(new Date());
-	        	logger.debug("---nowday----"+nowday);
+	        	log.debug("---nowday----"+nowday);
 	    		File file = new File(ctxPath+File.separator+bizPath+File.separator+nowday);
 	    		if (!file.exists()) {
 	    			file.mkdirs();// 创建文件根目录
@@ -1603,7 +1605,7 @@ public class SystemController extends BaseController {
 				msg="上传成功";
 				j.setMsg(msg);
 				String dbpath=bizPath+File.separator+nowday+File.separator+fileName;
-				logger.debug("---dbpath----"+dbpath);
+				log.debug("---dbpath----"+dbpath);
 				if(dbpath.contains("\\")){
 					dbpath = dbpath.replace("\\","/");
 				}
@@ -1621,31 +1623,31 @@ public class SystemController extends BaseController {
 	        	File fileDelete = new File(delpath);
 	    		if (!fileDelete.exists() || !fileDelete.isFile()) {
 	    			msg="警告: " + delpath + "不存在!";
-	    			logger.info(msg);
+	    			log.info(msg);
 	    			j.setSuccess(true);//不存在前台也给他删除
 	    		}else{
 	    			if(fileDelete.delete()){
 	    				msg="--------成功删除文件---------"+delpath;
-	    				logger.info(msg);
+	    				log.info(msg);
 	    				//删除swf/pdf文件
 	    				if("true".equals(globalSwfTransformFlag) && "true".equals(swfTransform)){
 	    					try {
 	    						String swfPath = FileUtils.getSwfPath(delpath);
 	    						new File(swfPath).delete();
-	    						logger.info("--------成功删除swf文件---------"+swfPath);
+	    						log.info("--------成功删除swf文件---------"+swfPath);
 	    						if(!delpath.endsWith("pdf")){
 	    							String pdfPath = delpath.substring(0, delpath.lastIndexOf(".")+1)+"pdf";
 	    							new File(pdfPath).delete();
-		    						logger.info("--------成功删除pdf文件---------"+pdfPath);
+		    						log.info("--------成功删除pdf文件---------"+pdfPath);
 	    						}
 							} catch (Exception e) {
-								logger.info("swf文件ORpdf文件未删除成功");
+								log.info("swf文件ORpdf文件未删除成功");
 							}
 	    				}
 	    			}else{
 	    				j.setSuccess(false);
 	    				msg="没删除成功--jdk的问题还是你文件的问题请重新试试";
-	    				logger.info(msg);
+	    				log.info(msg);
 	    			}
 	    		}
 	        }else{
@@ -1653,12 +1655,12 @@ public class SystemController extends BaseController {
 	        }
         } catch (IOException e) {
 			j.setSuccess(false);
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}catch (BusinessException b) {
 			j.setSuccess(false);
-			logger.info(b.getMessage());
+			log.info(b.getMessage());
 		}
-    	logger.debug("-----systemController/filedeal.do------------"+msg);
+    	log.debug("-----systemController/filedeal.do------------"+msg);
 		j.setMsg(msg);
         return j;
     }
@@ -1733,7 +1735,7 @@ public class SystemController extends BaseController {
 //	        }
 //	        response.flushBuffer();
 //		} catch (Exception e) {
-//			logger.info("--通过流的方式获取文件异常--"+e.getMessage());
+//			log.info("--通过流的方式获取文件异常--"+e.getMessage());
 //		}finally{
 //			if(inputStream!=null){
 //				inputStream.close();
@@ -1782,7 +1784,7 @@ public class SystemController extends BaseController {
 	        }
 	        response.flushBuffer();
 		} catch (Exception e) {
-			logger.info("--通过流的方式获取文件异常--"+e.getMessage());
+			log.info("--通过流的方式获取文件异常--"+e.getMessage());
 		}finally{
 			if(inputStream!=null){
 				inputStream.close();

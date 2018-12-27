@@ -4,7 +4,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
+//import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.controller.BaseController;
 import org.jeecgframework.core.common.exception.BusinessException;
 import org.jeecgframework.core.common.hibernate.qbc.CriteriaQuery;
@@ -37,13 +38,14 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 //@Scope("prototype")
+@Slf4j
 @Controller
 @RequestMapping("/cgreportConfigHeadController")
 public class CgreportConfigHeadController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(CgreportConfigHeadController.class);
+	//private static final Logger log = Logger.getLogger(CgreportConfigHeadController.class);
 
 	@Autowired
 	private CgreportConfigHeadServiceI cgreportConfigHeadService;
@@ -100,7 +102,7 @@ public class CgreportConfigHeadController extends BaseController {
 		try{
 			cgreportConfigHeadService.delMain(cgreportConfigHead);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online报表删除]["+cgreportConfigHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online报表删除]["+cgreportConfigHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "动态报表配置抬头删除失败";
@@ -126,7 +128,7 @@ public class CgreportConfigHeadController extends BaseController {
 				CgreportConfigHeadEntity cgreportConfigHead = systemService.getEntity(CgreportConfigHeadEntity.class, id);
 				cgreportConfigHeadService.delMain(cgreportConfigHead);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
-				logger.info("["+IpUtil.getIpAddr(request)+"][online报表批量删除]["+cgreportConfigHead.getCode()+"]"+message);
+				log.info("["+IpUtil.getIpAddr(request)+"][online报表批量删除]["+cgreportConfigHead.getCode()+"]"+message);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -166,7 +168,7 @@ public class CgreportConfigHeadController extends BaseController {
 			}
 			cgreportConfigHeadService.addMain(cgreportConfigHead, cgreportConfigItemList,cgreportConfigParamList);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online报表录入]["+cgreportConfigHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online报表录入]["+cgreportConfigHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "动态报表配置抬头添加失败";
@@ -204,7 +206,7 @@ public class CgreportConfigHeadController extends BaseController {
 			}
 			cgreportConfigHeadService.updateMain(cgreportConfigHead, cgreportConfigItemList, cgreportConfigParamList);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
-			logger.info("["+IpUtil.getIpAddr(request)+"][online报表更新]["+cgreportConfigHead.getCode()+"]"+message);
+			log.info("["+IpUtil.getIpAddr(request)+"][online报表更新]["+cgreportConfigHead.getCode()+"]"+message);
 		}catch(Exception e){
 			e.printStackTrace();
 			message = "更新动态报表配置抬头失败";
@@ -261,7 +263,7 @@ public class CgreportConfigHeadController extends BaseController {
 	    	List<CgreportConfigItemEntity> cgreportConfigItemEntityList = systemService.findHql(hql0,id0);
 			req.setAttribute("cgreportConfigItemList", cgreportConfigItemEntityList);
 		}catch(Exception e){
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/cgreport/core/cgreportConfigItemList");
 	}
@@ -284,7 +286,7 @@ public class CgreportConfigHeadController extends BaseController {
 	    	List<CgreportConfigParamEntity> cgreportConfigParamEntityList = systemService.findHql(hql0,id0);
 			req.setAttribute("cgreportConfigParamList", cgreportConfigParamEntityList);
 		}catch(Exception e){
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		return new ModelAndView("jeecg/cgreport/core/cgreportConfigParamList");
 	}
@@ -311,7 +313,7 @@ public class CgreportConfigHeadController extends BaseController {
 	    		}
 	    	}
 		}catch(Exception e){
-			logger.info(e.getMessage());
+			log.info(e.getMessage());
 		}
 		modelMap.put("params",sb.toString());
 		return new ModelAndView("jeecg/cgreport/core/popmenulink");

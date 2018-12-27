@@ -6,8 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,14 +39,14 @@ import org.jeecgframework.core.util.MyBeanUtils;
  * @version V1.0
  * 
  */
+@Slf4j
 @Controller
 @RequestMapping("/categoryController")
 public class CategoryController extends BaseController {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger
-			.getLogger(CategoryController.class);
+	//private static final Logger log = Logger.getLogger(CategoryController.class);
 
 	private static final String CATEGORY_LIST = "system/category/categoryList";
 	private static final String CATEGORY_ADD_OR_UPDATE = "system/category/category";
@@ -147,7 +148,7 @@ public class CategoryController extends BaseController {
 				systemService.addLog(j.getMsg(), Globals.Log_Type_UPDATE,
 						Globals.Log_Leavel_INFO);
 			} catch (Exception e) {
-				logger.error(e.getMessage(), e.fillInStackTrace());
+				log.error(e.getMessage(), e.fillInStackTrace());
 				j.setMsg("分类管理更新失败");
 			}
 		} else {
