@@ -1,5 +1,8 @@
 package org.jeecgframework.config;
 
+import lombok.extern.slf4j.Slf4j;
+import org.jeecgframework.core.annotation.MiniDaoRepository;
+import org.jeecgframework.minidao.aspect.MinidaoInterceptor;
 import org.jeecgframework.minidao.factory.MiniDaoBeanScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Repository;
  * @author sbdz
  * @date 2018/12/27 17:32
  */
+@Slf4j
 @Configuration
 public class MiniDaoConfig {
 
@@ -38,8 +42,11 @@ public class MiniDaoConfig {
         miniDaoBeanScannerConfigurer.setFormatSql(false);
         miniDaoBeanScannerConfigurer.setShowSql(false);
         miniDaoBeanScannerConfigurer.setDbType("mysql");
-        miniDaoBeanScannerConfigurer.setBasePackage("org.jeecgframework.web,com.jeecg");
-        miniDaoBeanScannerConfigurer.setAnnotation(Repository.class);
+        miniDaoBeanScannerConfigurer.setBasePackage("org.jeecgframework,com.jeecg");
+        miniDaoBeanScannerConfigurer.setAnnotation(MiniDaoRepository.class);
+        miniDaoBeanScannerConfigurer.setEmptyInterceptor(new MinidaoInterceptor());
+        log.error("注册bean MiniDaoBeanScannerConfigurer");
+        return miniDaoBeanScannerConfigurer;
     }
 
 

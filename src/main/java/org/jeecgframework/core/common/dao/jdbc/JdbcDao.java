@@ -3,9 +3,11 @@ package org.jeecgframework.core.common.dao.jdbc;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
+import org.jeecgframework.core.annotation.MiniDaoRepository;
 import org.jeecgframework.core.util.MyBeanUtils;
 import org.jeecgframework.core.util.ResourceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 //@Repository("jdbcDao")
 @Slf4j
+@MiniDaoRepository("jdbcDao")
 public class JdbcDao extends SimpleJdbcTemplate{
 	
 	/**
@@ -44,6 +47,7 @@ public class JdbcDao extends SimpleJdbcTemplate{
 
     public JdbcDao() {
         super();
+        log.error("执行了JdbcDao() 空构造函数");
     }
 
     //@Autowired
@@ -55,9 +59,12 @@ public class JdbcDao extends SimpleJdbcTemplate{
 	}
 
 	//@Resource(name = "dataSource")
-    public void insertDataSource(DataSource dataSource) {
+    @Autowired(required = false)
+    @Qualifier("dataSource")
+    public void setDataSource(DataSource dataSource) {
         log.error("注入DataSource ， {}, {}", dataSource.toString(),dataSource.getClass().getSimpleName());
         super.insertDataSource(dataSource);
+        super.setDataSource(dataSource);
     }
 	
 	/**

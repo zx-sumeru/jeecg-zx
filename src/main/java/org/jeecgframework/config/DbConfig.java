@@ -46,7 +46,7 @@ public class DbConfig {
         dataSource.setMaxActive(10);
         dataSource.setMinIdle(1);
         dataSource.setValidationQuery("SELECT 1");
-        log.debug("注册了DataSource dataSource_jeecg DruidDataSource");
+        log.error("注册了DataSource dataSource_jeecg DruidDataSource");
         return dataSource;
         /*
 		init-method="init" destroy-method="close">
@@ -112,7 +112,7 @@ public class DbConfig {
         map.put(DataSourceType.dataSource_jeecg, dataSource);
         dynamicDataSource.setTargetDataSources(map);
         dynamicDataSource.setDefaultTargetDataSource(dataSource);
-        log.debug("注册了DataSource dataSource DynamicDataSource");
+        log.error("注册了DataSource dataSource DynamicDataSource");
         return dynamicDataSource;
     }
 
@@ -212,11 +212,12 @@ public class DbConfig {
         return commonDao;
     }
 
-    @Bean(name = "jdbcDao")
-    public JdbcDao jdbcDao(@Autowired @Qualifier("dataSource") DataSource dataSource) {
-        JdbcDao jdbcDao = new JdbcDao();
-        jdbcDao.insertDataSource(dataSource);
-        return jdbcDao;
-    }
+    //@Bean(name = "jdbcDao")
+    //public JdbcDao jdbcDao(@Autowired @Qualifier("dataSource") DataSource dataSource) {
+    //    JdbcDao jdbcDao = new JdbcDao();
+    //    jdbcDao.insertDataSource(dataSource);
+    //    log.error("注册bean JdbcDao");
+    //    return jdbcDao;
+    //}
 
 }

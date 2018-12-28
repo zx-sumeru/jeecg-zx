@@ -44,8 +44,11 @@ public class SimpleJdbcTemplate extends JdbcTemplate {
 	protected void insertDataSource(DataSource dataSource) {
         log.error("注入DataSource ， {}, {}", dataSource.toString(),dataSource.getClass().getSimpleName());
         jdbcTemplate=new JdbcTemplate(dataSource);
+        log.error("执行了 jdbcTemplate=new JdbcTemplate(dataSource);");
         namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+		log.error("执行了 namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);");
         simpleJdbcInsert=new SimpleJdbcInsert(dataSource);
+		log.error("执行了 simpleJdbcInsert=new SimpleJdbcInsert(dataSource);");
     }
 
 

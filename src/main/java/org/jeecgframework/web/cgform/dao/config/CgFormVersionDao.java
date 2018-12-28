@@ -1,5 +1,6 @@
 package org.jeecgframework.web.cgform.dao.config;
 
+import org.jeecgframework.core.annotation.MiniDaoRepository;
 import org.jeecgframework.web.cgform.entity.config.CgFormHeadEntity;
 
 import org.jeecgframework.minidao.annotation.Arguments;
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Repository;
  * @date Aug 24, 2013 11:33:33 AM
  * @version V1.0
  */
-@Repository("cgFormVersionDao")
+//@Repository("cgFormVersionDao")
+@MiniDaoRepository("cgFormVersionDao")
 public interface CgFormVersionDao {
 	@Arguments("tableName")
 	public String  getCgFormVersionByTableName(String tableName);

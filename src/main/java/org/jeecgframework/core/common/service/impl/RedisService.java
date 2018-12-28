@@ -1,6 +1,7 @@
 package org.jeecgframework.core.common.service.impl;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RedisService {
 
-    @Resource
+    //@Resource
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
     /**

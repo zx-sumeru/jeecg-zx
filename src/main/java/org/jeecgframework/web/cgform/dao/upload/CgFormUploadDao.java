@@ -1,5 +1,6 @@
 package org.jeecgframework.web.cgform.dao.upload;
 
+import org.jeecgframework.core.annotation.MiniDaoRepository;
 import org.jeecgframework.minidao.annotation.Arguments;
 import org.jeecgframework.minidao.annotation.MiniDao;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,8 @@ import org.springframework.stereotype.Repository;
  * @version V1.0
  */
 
-@Repository("cgFormUploadDao")
+//@Repository("cgFormUploadDao")
+@MiniDaoRepository("cgFormUploadDao")
 public interface CgFormUploadDao {
 	/**
 	 * 将文件上传的信息回填到业务表中
