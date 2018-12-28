@@ -1,5 +1,6 @@
 package org.jeecgframework.web.system.pojo.base;
 
+import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.jeecgframework.core.common.entity.IdEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -14,6 +15,7 @@ import java.util.List;
  * 系统用户父类表
  * @author  张代浩
  */
+@Slf4j
 @Entity
 @Table(name = "t_s_base_user")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -198,4 +200,8 @@ public class TSBaseUser extends IdEntity implements java.io.Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
+
+    public TSBaseUser() {
+	    log.error("TSBaseUser 默认初始化");
+    }
 }

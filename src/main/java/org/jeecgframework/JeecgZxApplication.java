@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = {"org.jeecgframework", "com.jeecg"},
-        exclude = {HibernateJpaAutoConfiguration.class,DataSourceAutoConfiguration.class})
+        exclude = {/*HibernateJpaAutoConfiguration.class,*/DataSourceAutoConfiguration.class})
 public class JeecgZxApplication {
 
     public static void main(String[] args) {
