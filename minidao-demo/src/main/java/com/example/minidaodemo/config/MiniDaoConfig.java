@@ -38,8 +38,8 @@ public class MiniDaoConfig {
     public MiniDaoBeanScannerConfigurer configMiniDao() {
         MiniDaoBeanScannerConfigurer miniDaoBeanScannerConfigurer = new MiniDaoBeanScannerConfigurer();
         miniDaoBeanScannerConfigurer.setKeyType("lower");
-        miniDaoBeanScannerConfigurer.setFormatSql(false);
-        miniDaoBeanScannerConfigurer.setShowSql(false);
+        miniDaoBeanScannerConfigurer.setFormatSql(true);
+        miniDaoBeanScannerConfigurer.setShowSql(true);
         miniDaoBeanScannerConfigurer.setDbType("mysql");
         miniDaoBeanScannerConfigurer.setBasePackage("com.example.minidaodemo");
         miniDaoBeanScannerConfigurer.setAnnotation(MiniDao.class);
