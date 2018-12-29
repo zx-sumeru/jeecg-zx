@@ -3,6 +3,7 @@ package com.jeecg.demo.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.jeecgframework.core.annotation.MiniDaoRepository;
 import org.jeecgframework.minidao.annotation.*;
 import com.jeecg.demo.entity.JeecgDemoEntity;
 import com.jeecg.demo.entity.JeecgLogReport;
@@ -13,6 +14,7 @@ import org.jeecgframework.minidao.pojo.MiniDaoPage;
  * 
  */
 @MiniDao
+@MiniDaoRepository
 public interface JeecgMinidaoDao {
 	
 	@Arguments("pid")
