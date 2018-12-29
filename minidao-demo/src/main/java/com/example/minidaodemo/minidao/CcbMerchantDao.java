@@ -36,4 +36,6 @@ public interface CcbMerchantDao {
 
     @Sql("select * from tb_ccb_merchant where id = :id")
     CcbMerchant findById(@Param("id") Integer id);
+
+    // FIXME: 2018/12/29 8:55 使用@Sql可以使用，使用分离写法时报 模板找不i到的异常
 }
