@@ -46,7 +46,7 @@ public class TestController {
 
     @RequestMapping("/demo")
     public String demo2() {
-        JpDemoOrderCustomEntity entity = jpDemoOrderCustomDao.get("402881e461dc25320161dc27ded0000b");
+        JpDemoOrderCustomEntity entity = jpDemoOrderCustomDao.get("402831816286becb016286bfed5d0001");
         String string = JSONObject.toJSONString(entity);
         log.info(string);
         return string;
