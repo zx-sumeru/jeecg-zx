@@ -1,0 +1,1 @@
+select * from tb_ccb_merchant where id = :id
